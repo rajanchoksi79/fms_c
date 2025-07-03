@@ -136,7 +136,7 @@ int rename_file(char *path_one, char *path_two)
     }
     else
     {
-        if (rename(path_one, path_two) == -1) 
+        if (rename(path_one, path_two) == -1)
         {
             perror("Error occured while renaming file");
             return 1;
@@ -149,14 +149,14 @@ int rename_file(char *path_one, char *path_two)
 
 int move_file(char *path_one, char *path_two)
 {
-    if (path_one == path_two) 
+    if (path_one == path_two)
     {
         perror("Error, move do not work when both directory are the same");
         return 1;
     }
-    else 
+    else
     {
-        if (rename(path_one, path_two) == -1) 
+        if (rename(path_one, path_two) == -1)
         {
             perror("Error occured while moving file");
             return 1;
@@ -229,6 +229,24 @@ int copy_file(char *path_one, char *path_two)
     return 0;
 }
 
+int states_file(char *path)
+{
+    struct stat file_details;
+    if (stat(path, &file_details) == -1)
+    {
+        perror("Error occured while capturing file states");
+        return 1;
+    }
+
+    // after understanding this sys call, update these details below with what you want to display.
+    printf("File info: \n\n");
+    printf("File size: %ld bytes\n", file_details.st_size);
+    printf("Owner UID: %d\n", file_details.st_uid);
+    printf("Permissions: %o\n", file_details.st_mode & 0777);
+    printf("Last modified: %ld\n", file_details.st_mtime);
+    return 0;
+}
+
 int main(int argc, char *argv[])
 {
     char *flag = argv[1];
@@ -277,7 +295,10 @@ int main(int argc, char *argv[])
         break;
     case 'e':
         rename_file(path_one, path_two);
-        break;        
+        break;
+    case 's':
+        states_file(path_one);
+        break;
     default:
         printf("please provide appropriate flag\n");
         break;
