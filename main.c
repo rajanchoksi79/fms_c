@@ -127,7 +127,7 @@ int write_file(char *path, char *text)
 // {
 // }
 
-int copy_file(char path_one, char path_two)
+int copy_file(char *path_one, char *path_two)
 {
     int fd_one;
     fd_one = open(path_one, O_RDONLY);
@@ -210,7 +210,9 @@ int main(int argc, char *argv[])
         if (argv[3] == NULL) 
         {
             perror("please provide new path where you want to copy file one");
+            return 1;
         }
+        path_two = argv[3];
     } 
 
     switch (*flag)

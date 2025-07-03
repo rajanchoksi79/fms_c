@@ -1,1 +1,0 @@
-print("this is foo.py file")
