@@ -49,7 +49,7 @@ int read_file(char *path)
     // i need to see if i need to increase or decrease this, the buffer size.
     char buffer[128];
     while ((byte_read = read(fd, buffer, sizeof(buffer))) > 0)
-    {   
+    {
         // i haven't handled error that may occure in writing here.
         write(STDOUT_FILENO, buffer, byte_read);
     }
@@ -97,14 +97,14 @@ int write_file(char *path, char *text)
     if (byte_write == -1)
     {
         perror("error occured while writing file");
-        if (close(fd) == -1) 
+        if (close(fd) == -1)
         {
             perror("error closing file, after failed to write it");
             return 1;
         }
         return 1;
     }
-    
+
     if (close(fd) == -1)
     {
         perror("error closing file, after writing it");
@@ -115,13 +115,9 @@ int write_file(char *path, char *text)
     return 0;
 }
 
-// void rename_file()
-// {
-// }
-
 int remove_file(char *path)
 {
-    if (unlink(path) == -1) 
+    if (unlink(path) == -1)
     {
         perror("Error occured while removing file");
         return 1;
@@ -131,9 +127,45 @@ int remove_file(char *path)
     return 0;
 }
 
-// void move_file()
-// {
-// }
+int rename_file(char *path_one, char *path_two)
+{
+    if (path_one != path_two)
+    {
+        perror("Error, rename do not work when both directory are not the same with different file name");
+        return 1;
+    }
+    else
+    {
+        if (rename(path_one, path_two) == -1) 
+        {
+            perror("Error occured while renaming file");
+            return 1;
+        }
+
+        printf("File renamed successfully");
+        return 0;
+    }
+}
+
+int move_file(char *path_one, char *path_two)
+{
+    if (path_one == path_two) 
+    {
+        perror("Error, move do not work when both directory are the same");
+        return 1;
+    }
+    else 
+    {
+        if (rename(path_one, path_two) == -1) 
+        {
+            perror("Error occured while moving file");
+            return 1;
+        }
+
+        printf("File moved successfully");
+        return 0;
+    }
+}
 
 int copy_file(char *path_one, char *path_two)
 {
@@ -152,7 +184,7 @@ int copy_file(char *path_one, char *path_two)
 
     int fd_two;
     fd_two = creat(path_two, 0644);
-    if(fd_two == -1) 
+    if (fd_two == -1)
     {
         perror("error occured while opening file two");
         if (close(fd_two) == -1)
@@ -165,13 +197,13 @@ int copy_file(char *path_one, char *path_two)
 
     ssize_t byte_read, byte_write;
     char buffer[128];
-    while ((byte_read = read(fd_one, buffer, sizeof(buffer))) > 0) 
+    while ((byte_read = read(fd_one, buffer, sizeof(buffer))) > 0)
     {
         byte_write = write(fd_two, buffer, byte_read);
-        if (byte_write == -1) 
+        if (byte_write == -1)
         {
             perror("error occured while writing file two");
-            if (close(fd_two) == -1) 
+            if (close(fd_two) == -1)
             {
                 perror("error closing file, after failed to write it");
                 return 1;
@@ -181,13 +213,13 @@ int copy_file(char *path_one, char *path_two)
         }
     }
 
-    if (close(fd_one) == -1) 
+    if (close(fd_one) == -1)
     {
         perror("error closing file, after reading from it");
         return 1;
     }
 
-    if (close(fd_two) == -1) 
+    if (close(fd_two) == -1)
     {
         perror("error closing file, after writing in it");
         return 1;
@@ -212,16 +244,16 @@ int main(int argc, char *argv[])
         }
         text = argv[3];
     }
-    
-    if (*flag == 'p') 
+
+    if (*flag == 'p' || *flag == 'm' || *flag == 'e')
     {
-        if (argv[3] == NULL) 
+        if (argv[3] == NULL)
         {
             perror("please provide new path where you want to copy file one");
             return 1;
         }
         path_two = argv[3];
-    } 
+    }
 
     switch (*flag)
     {
@@ -230,15 +262,21 @@ int main(int argc, char *argv[])
         break;
     case 'r':
         read_file(path_one);
-        break;    
+        break;
     case 'w':
         write_file(path_one, text);
         break;
     case 'p':
         copy_file(path_one, path_two);
         break;
-    case 'x': 
+    case 'x':
         remove_file(path_one);
+        break;
+    case 'm':
+        move_file(path_one, path_two);
+        break;
+    case 'e':
+        rename_file(path_one, path_two);
         break;        
     default:
         printf("please provide appropriate flag\n");
