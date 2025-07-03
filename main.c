@@ -143,7 +143,7 @@ int copy_file(char path_one, char path_two)
     }
 
     int fd_two;
-    fd_two = open(path_two, O_RDWR);
+    fd_two = creat(path_two, 0644);
     if(fd_two == -1) 
     {
         perror("error occured while opening file two");
@@ -192,8 +192,8 @@ int copy_file(char path_one, char path_two)
 int main(int argc, char *argv[])
 {
     char *flag = argv[1];
-    char *path = argv[2];
-    char *text;
+    char *path_one = argv[2];
+    char *text, *path_two;
 
     if (*flag == 'w')
     {
@@ -204,18 +204,29 @@ int main(int argc, char *argv[])
         }
         text = argv[3];
     }
+    
+    if (*flag == 'p') 
+    {
+        if (argv[3] == NULL) 
+        {
+            perror("please provide new path where you want to copy file one");
+        }
+    } 
 
     switch (*flag)
     {
     case 'c':
-        create_file(path);
+        create_file(path_one);
         break;
     case 'r':
-        read_file(path);
+        read_file(path_one);
         break;
     case 'w':
-        write_file(path, text);
+        write_file(path_one, text);
         break;
+    case 'p':
+        copy_file(path_one, path_two);
+        break;    
     default:
         printf("please provide appropriate flag\n");
         break;
