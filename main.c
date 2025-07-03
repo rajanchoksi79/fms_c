@@ -119,9 +119,17 @@ int write_file(char *path, char *text)
 // {
 // }
 
-// void remove_file()
-// {
-// }
+int remove_file(char *path)
+{
+    if (unlink(path) == -1) 
+    {
+        perror("Error occured while removing file");
+        return 1;
+    }
+
+    printf("Success: file removed\n");
+    return 0;
+}
 
 // void move_file()
 // {
@@ -222,13 +230,16 @@ int main(int argc, char *argv[])
         break;
     case 'r':
         read_file(path_one);
-        break;
+        break;    
     case 'w':
         write_file(path_one, text);
         break;
     case 'p':
         copy_file(path_one, path_two);
-        break;    
+        break;
+    case 'x': 
+        remove_file(path_one);
+        break;        
     default:
         printf("please provide appropriate flag\n");
         break;
