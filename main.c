@@ -1,5 +1,6 @@
 #include <fcntl.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <stdio.h>
@@ -14,6 +15,7 @@ int main(int argc, char *argv[])
     char *flag = argv[1];
     char *path_one = argv[2];
     char *text, *path_two;
+    int permission_code;
 
     if (strcmp(flag, "--writef") == 0)
     {
@@ -34,6 +36,13 @@ int main(int argc, char *argv[])
         }
         path_two = argv[3];
     }
+
+    // refactore and fix this, this is temp.
+    if (strcmp(flag, "--changeperf") == 0) 
+    {
+        permission_code = atoi(argv[3]);
+    }
+
 
     if (strcmp(flag, "--createf") == 0)
     {
@@ -66,6 +75,10 @@ int main(int argc, char *argv[])
     else if (strcmp(flag, "--detailf") == 0)
     {
         states_file(path_one);
+    }
+    else if (strcmp(flag, "--changeperf") == 0) 
+    {
+        change_file_permission(path_one, permission_code);
     }
     else if (strcmp(flag, "--help") == 0) 
     {
