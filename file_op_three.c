@@ -4,7 +4,7 @@
 #include <sys/stat.h>
 #include <stdio.h>
 #include <string.h>
-
+#include <time.h>
 
 int states_file(char *path)
 {
@@ -19,8 +19,9 @@ int states_file(char *path)
     printf("File info: \n\n");
     printf("File size: %ld bytes\n", file_details.st_size);
     printf("Owner UID: %d\n", file_details.st_uid);
-    printf("Permissions: %o\n", file_details.st_mode & 0777);
-    printf("Last modified: %ld\n", file_details.st_mtime);
+    printf("Permissions: %d\n", file_details.st_mode & 0777);
+    printf("Last accessed: %s", ctime(&file_details.st_atime));
+    printf("Last modified: %s", ctime(&file_details.st_mtime));
     return 0;
 }
 
