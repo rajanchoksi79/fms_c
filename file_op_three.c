@@ -20,7 +20,7 @@ int states_file(char *path)
     printf("File size: %ld bytes\n", file_details.st_size);
     printf("Owner UID: %d\n", file_details.st_uid);
     printf("Group UID: %d\n", file_details.st_gid);
-    printf("Permissions: %d\n", file_details.st_mode & 0777);
+    printf("Permissions: %d\n", file_details.st_mode);
     printf("Last accessed: %s", ctime(&file_details.st_atime));
     printf("Last modified: %s", ctime(&file_details.st_mtime));
     return 0;
