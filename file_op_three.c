@@ -42,9 +42,6 @@ int change_file_permission(char *path, mode_t per_code)
         return 1;
     }
 
-    // test code
-    printf("permission code: %o\n", per_code);
-
     if (per_code < 0000 && per_code > 0777) 
     {
         perror("Invalid permission code, it must be between 0000 to 0777");
