@@ -20,7 +20,7 @@ int states_file(char *path)
     printf("File size: %ld bytes\n", file_details.st_size);
     printf("Owner UID: %d\n", file_details.st_uid);
     printf("Group UID: %d\n", file_details.st_gid);
-    printf("Permissions: %o\n", file_details.st_mode & 0777);
+    printf("Permissions: %04o\n", file_details.st_mode & 0777);
     printf("Last accessed: %s", ctime(&file_details.st_atime));
     printf("Last modified: %s", ctime(&file_details.st_mtime));
     return 0;
@@ -42,7 +42,10 @@ int change_file_permission(char *path, mode_t per_code)
         return 1;
     }
 
-    if (per_code < 0000 && per_code > 0777) 
+    // test code
+    printf("permission code: %04o\n", per_code);
+
+    if (per_code < 0000 || per_code > 0777) 
     {
         perror("Invalid permission code, it must be between 0000 to 0777");
         return 1;
@@ -69,7 +72,7 @@ int change_file_permission(char *path, mode_t per_code)
         return 1;
     }
     mode_t file_permission = file_details.st_mode;
-    printf("File permission code: %o\n", file_permission & 0777);
+    printf("File permission code: %04o\n", file_permission & 0777);
 
     return 0;
 }
