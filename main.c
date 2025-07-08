@@ -90,5 +90,7 @@ int main(int argc, char *argv[])
         // add flag details to display to user.
     }
 
+    // this will add new line at last regardless of outcome.
+    printf("\n");
     return 0;
 }

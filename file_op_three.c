@@ -16,7 +16,7 @@ int states_file(char *path)
     }
 
     // after understanding this sys call, update these details below with what you want to display.
-    printf("File info: \n\n");
+    printf("\nFile info: \n\n");
     printf("File size: %ld bytes\n", file_details.st_size);
     printf("Owner UID: %d\n", file_details.st_uid);
     printf("Group UID: %d\n", file_details.st_gid);
