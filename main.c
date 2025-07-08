@@ -45,7 +45,13 @@ int main(int argc, char *argv[])
             perror("please provide permission code to change permission of file");
             return 1;
         }
-        permission_code = strtol(argv[3], NULL, 8);
+        permission_code = parse_octal_mode(argv[3]);
+        printf("permission code in main: %o\n", permission_code);
+        if (permission_code == (mode_t)-1) 
+        {   
+            // i already handled error in parse octal function, here i am just returning in case of error
+            return 1;
+        }
     }
 
     // placeholder added at the start.

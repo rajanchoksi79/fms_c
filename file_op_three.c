@@ -1,10 +1,12 @@
 #include <fcntl.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include <errno.h>
 
 int states_file(char *path)
 {
@@ -45,12 +47,6 @@ int change_file_permission(char *path, mode_t per_code)
     // test code
     printf("permission code: %04o\n", per_code);
 
-    if (per_code < 0000 || per_code > 0777) 
-    {
-        perror("Invalid permission code, it must be between 0000 to 0777");
-        return 1;
-    }
-
     int change_permission = fchmod(fd, per_code);
     if(change_permission == -1) 
     {
@@ -75,6 +71,22 @@ int change_file_permission(char *path, mode_t per_code)
     printf("File permission code: %04o\n", file_permission & 0777);
 
     return 0;
+}
+
+mode_t parse_octal_mode(char *input) 
+{
+    char *end_ptr;
+    errno = 0;
+
+    long permission_code = strtol(input, &end_ptr, 8);
+
+    if (*end_ptr != '\0' || errno != 0 || permission_code < 0000 || permission_code > 0777) 
+    {
+        fprintf(stderr, "Invalid permission code, it must be between 0000 to 0777\n");
+        return (mode_t)-1;
+    }
+
+    return (mode_t)permission_code;
 }
 
 int help_user() 
