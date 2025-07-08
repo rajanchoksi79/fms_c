@@ -43,6 +43,8 @@ int main(int argc, char *argv[])
         permission_code = atoi(argv[3]);
     }
 
+    // placeholder added at the start.
+    printf("\n");
 
     if (strcmp(flag, "--createf") == 0)
     {
