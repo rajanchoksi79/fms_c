@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     char *flag = argv[1];
     char *path_one = argv[2];
     char *text, *path_two;
-    int permission_code;
+    mode_t permission_code;
 
     if (strcmp(flag, "--writef") == 0)
     {
@@ -39,8 +39,13 @@ int main(int argc, char *argv[])
 
     // refactore and fix this, this is temp.
     if (strcmp(flag, "--changeperf") == 0) 
-    {
-        permission_code = atoi(argv[3]);
+    {   
+        if (argv[3] == NULL) 
+        {
+            perror("please provide permission code to change permission of file");
+            return 1;
+        }
+        permission_code = strtol(argv[3], NULL, 8);
     }
 
     // placeholder added at the start.

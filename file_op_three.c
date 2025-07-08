@@ -27,7 +27,7 @@ int states_file(char *path)
 }
 
 // this is basic version, i have to see more about this and also need to put filter or other things in mode or permission code that i receive.
-int change_file_permission(char *path, int per_code) 
+int change_file_permission(char *path, mode_t per_code) 
 {
     int fd;
     fd = open(path, O_WRONLY);
@@ -39,6 +39,15 @@ int change_file_permission(char *path, int per_code)
             perror("error closing file, after failed to open it");
             return 1;
         }
+        return 1;
+    }
+
+    // test code
+    printf("permission code: %o\n", per_code);
+
+    if (per_code < 0000 && per_code > 0777) 
+    {
+        perror("Invalid permission code, it must be between 0000 to 0777");
         return 1;
     }
 
@@ -55,6 +64,16 @@ int change_file_permission(char *path, int per_code)
     }
 
     printf("File permission changed successfully\n");
+    
+    struct stat file_details;
+    if (stat(path, &file_details) == -1)
+    {
+        perror("Error occured while capturing file permission code details");
+        return 1;
+    }
+    mode_t file_permission = file_details.st_mode;
+    printf("File permission code: %o\n", file_permission & 0777);
+
     return 0;
 }
 
