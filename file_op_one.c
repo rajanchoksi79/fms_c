@@ -13,10 +13,10 @@ int create_file(char *path)
     fd = creat(path, 0644);
     if (fd == -1)
     {
-        printf("Error occured, %s", strerror(errno));
+        printf("Error occured, %s\n", strerror(errno));
         if (close(fd) == -1)
         {
-            printf("Error occured, %s", strerror(errno));
+            printf("Error occured, %s\n", strerror(errno));
             return 1;
         }
         return 1;
@@ -24,7 +24,7 @@ int create_file(char *path)
 
     if (close(fd) == -1)
     {
-        printf("Error occured, %s", strerror(errno));
+        printf("Error occured, %s\n", strerror(errno));
         return 1;
     }
 
@@ -36,7 +36,7 @@ int read_file(char *path)
 {
     if (access(path, F_OK) == -1) 
     {   
-        printf("Error occured, %s", strerror(errno));
+        printf("Error occured, %s\n", strerror(errno));
         return 1;
     }
 
@@ -44,10 +44,10 @@ int read_file(char *path)
     fd = open(path, O_RDONLY);
     if (fd == -1)
     {
-        printf("Error occured, %s", strerror(errno));
+        printf("Error occured, %s\n", strerror(errno));
         if (close(fd) == -1)
         {
-            printf("Error occured, %s", strerror(errno));
+            printf("Error occured, %s\n", strerror(errno));
             return 1;
         }
         return 1;
@@ -55,7 +55,7 @@ int read_file(char *path)
 
     if (access(path, R_OK) == -1) 
     {
-        printf("Error occured, %s", strerror(errno));
+        printf("Error occured, %s\n", strerror(errno));
         return 1;
     }
 
@@ -71,10 +71,10 @@ int read_file(char *path)
 
     if (byte_read == -1)
     {
-        printf("Error occured, %s", strerror(errno));
+        printf("Error occured, %s\n", strerror(errno));
         if (close(fd) == -1)
         {
-            printf("Error occured, %s", strerror(errno));
+            printf("Error occured, %s\n", strerror(errno));
             return 1;
         }
         return 1;
@@ -82,7 +82,7 @@ int read_file(char *path)
 
     if (close(fd) == -1)
     {
-        printf("Error occured, %s", strerror(errno));
+        printf("Error occured, %s\n", strerror(errno));
         return 1;
     }
 
@@ -95,7 +95,7 @@ int write_file(char *path, char *text)
 
     if(access(path, F_OK) == -1) 
     {
-        printf("Error occured, %s", strerror(errno));
+        printf("Error occured, %s\n", strerror(errno));
         return 1;
     }
 
@@ -104,10 +104,10 @@ int write_file(char *path, char *text)
     fd = open(path, O_WRONLY);
     if (fd == -1)
     {
-        printf("Error occured, %s", strerror(errno));
+        printf("Error occured, %s\n", strerror(errno));
         if (close(fd) == -1)
         {
-            printf("Error occured, %s", strerror(errno));
+            printf("Error occured, %s\n", strerror(errno));
             return 1;
         }
         return 1;
@@ -115,7 +115,7 @@ int write_file(char *path, char *text)
 
     if (access(path, W_OK) == -1) 
     {
-        printf("Error occured, %s", strerror(errno));
+        printf("Error occured, %s\n", strerror(errno));
         return 1;
     }
 
@@ -123,10 +123,10 @@ int write_file(char *path, char *text)
     byte_write = write(fd, text, strlen(text));
     if (byte_write == -1)
     {
-        printf("Error occured, %s", strerror(errno));
+        printf("Error occured, %s\n", strerror(errno));
         if (close(fd) == -1)
         {
-            printf("Error occured, %s", strerror(errno));
+            printf("Error occured, %s\n", strerror(errno));
             return 1;
         }
         return 1;
@@ -134,7 +134,7 @@ int write_file(char *path, char *text)
 
     if (close(fd) == -1)
     {
-        printf("Error occured, %s", strerror(errno));
+        printf("Error occured, %s\n", strerror(errno));
         return 1;
     }
 
