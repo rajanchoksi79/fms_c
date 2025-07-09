@@ -54,9 +54,6 @@ int main(int argc, char *argv[])
         }
     }
 
-    // placeholder added at the start.
-    printf("\n");
-
     if (strcmp(flag, "--createf") == 0)
     {
         create_file(path_one);
@@ -103,7 +100,5 @@ int main(int argc, char *argv[])
         // add flag details to display to user.
     }
 
-    // this will add new line at last regardless of outcome.
-    printf("\n");
     return 0;
 }
