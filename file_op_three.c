@@ -8,18 +8,19 @@
 #include <time.h>
 #include <errno.h>
 
+
 int states_file(char *path)
 {
     if (access(path, F_OK) == -1) 
     {   
-        perror("Error occured, file do not exists on given path");
+        printf("Error occured, %s\n", strerror(errno));
         return 1;
     }
 
     struct stat file_details;
     if (stat(path, &file_details) == -1)
     {
-        perror("Error occured while capturing file states");
+        printf("Error occured, %s\n", strerror(errno));
         return 1;
     }
 
@@ -39,7 +40,7 @@ int change_file_permission(char *path, mode_t per_code)
 {   
     if (access(path, F_OK) == -1) 
     {   
-        perror("Error occured, file do not exists on given path");
+        printf("Error occured, %s\n", strerror(errno));
         return 1;
     }
 
@@ -47,10 +48,10 @@ int change_file_permission(char *path, mode_t per_code)
     fd = open(path, O_WRONLY);
     if (fd == -1) 
     {
-        perror("error occured while opening file");
+        printf("Error occured, %s\n", strerror(errno));
         if (close(fd) == -1) 
         {
-            perror("error closing file, after failed to open it");
+            printf("Error occured, %s\n", strerror(errno));
             return 1;
         }
         return 1;
@@ -62,10 +63,10 @@ int change_file_permission(char *path, mode_t per_code)
     int change_permission = fchmod(fd, per_code);
     if(change_permission == -1) 
     {
-        perror("error occured while changing permission of file");
+        printf("Error occured, %s\n", strerror(errno));
         if (close(fd) == -1) 
         {
-            perror("error closing file, after failed to change permission it");
+            printf("Error occured, %s\n", strerror(errno));
             return 1;
         }
         return 1;
@@ -76,7 +77,7 @@ int change_file_permission(char *path, mode_t per_code)
     struct stat file_details;
     if (stat(path, &file_details) == -1)
     {
-        perror("Error occured while capturing file permission code details");
+        printf("Error occured, %s\n", strerror(errno));
         return 1;
     }
     mode_t file_permission = file_details.st_mode;
@@ -94,7 +95,7 @@ mode_t parse_octal_mode(char *input)
 
     if (*end_ptr != '\0' || errno != 0 || permission_code < 0000 || permission_code > 0777) 
     {
-        fprintf(stderr, "Invalid permission code, it must be between 0000 to 0777\n");
+        printf("Invalid permission code, it must be between 0000 to 0777, %s\n", strerror(errno));
         return (mode_t)-1;
     }
 
@@ -103,5 +104,5 @@ mode_t parse_octal_mode(char *input)
 
 int help_user() 
 {
-    printf("here i will print all the help related things like kind of guide to user about how to use app and different flags");
+    printf("here i will print all the help related things like kind of guide to user about how to use app and different flags\n");
 }
