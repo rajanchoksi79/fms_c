@@ -4,6 +4,7 @@
 #include <sys/stat.h>
 #include <stdio.h>
 #include <string.h>
+#include <errno.h>
 
 
 int delete_file(char *path)
@@ -11,13 +12,13 @@ int delete_file(char *path)
 
     if (access(path, F_OK) == -1) 
     {   
-        perror("Error occured, file do not exists on given path");
+        printf("Error occured, %s\n", strerror(errno));
         return 1;
     }
 
     if (unlink(path) == -1)
     {
-        perror("Error occured while removing file");
+        printf("Error occured, %s\n", strerror(errno));
         return 1;
     }
 
@@ -29,24 +30,24 @@ int rename_file(char *path_one, char *path_two)
 {
     if (access(path_one, F_OK) == -1) 
     {   
-        perror("Error occured, file do not exists on given source path");
+        printf("Error occured, %s\n", strerror(errno));
         return 1;
     }
 
     if (path_one != path_two)
     {
-        perror("Error, rename do not work when both directory are not the same with different file name");
+        printf("Error occured, rename do not work when both directory are not the same with different file name\n");
         return 1;
     }
     else
     {
         if (rename(path_one, path_two) == -1)
         {
-            perror("Error occured while renaming file");
+            printf("Error occured, %s\n", strerror(errno));
             return 1;
         }
 
-        printf("File renamed successfully");
+        printf("File renamed successfully\n");
         return 0;
     }
 }
@@ -55,30 +56,30 @@ int move_file(char *path_one, char *path_two)
 {
     if (access(path_one, F_OK) == -1) 
     {   
-        perror("Error occured, file do not exists on given source path");
+        printf("Error occured, %s\n", strerror(errno));
         return 1;
     }
 
     if (access(path_two, F_OK) == -1) 
     {   
-        perror("Error occured, given destination path do not exists");
+        printf("Error occured, %s\n", strerror(errno));
         return 1;
     }
 
     if (path_one == path_two)
     {
-        perror("Error, file moving do not work when both directory are the same");
+        printf("Error occured, file moving do not work when both directory are the same\n");
         return 1;
     }
     else
     {
         if (rename(path_one, path_two) == -1)
         {
-            perror("Error occured while moving file");
+            printf("Error occured, %s\n", strerror(errno));
             return 1;
         }
 
-        printf("File moved successfully");
+        printf("File moved successfully\n");
         return 0;
     }
 }
@@ -88,13 +89,13 @@ int copy_file(char *path_one, char *path_two)
 {
     if (access(path_one, F_OK) == -1) 
     {   
-        perror("Error occured, file do not exists on given source path");
+        printf("Error occured, %s\n", strerror(errno));
         return 1;
     }
 
     if (access(path_two, F_OK) == -1) 
     {   
-        perror("Error occured, given destination path do not exists");
+        printf("Error occured, %s\n", strerror(errno));
         return 1;
     }
 
@@ -102,10 +103,10 @@ int copy_file(char *path_one, char *path_two)
     fd_one = open(path_one, O_RDONLY);
     if (fd_one == -1)
     {
-        perror("Error occured while opening file one");
+        printf("Error occured, %s\n", strerror(errno));
         if (close(fd_one) == -1)
         {
-            perror("Error closing file one, after failed to open it");
+            printf("Error occured, %s\n", strerror(errno));
             return 1;
         }
         return 1;
@@ -115,10 +116,10 @@ int copy_file(char *path_one, char *path_two)
     fd_two = creat(path_two, 0644);
     if (fd_two == -1)
     {
-        perror("Error occured while opening file two");
+        printf("Error occured, %s\n", strerror(errno));
         if (close(fd_two) == -1)
         {
-            perror("Error closing file two, after failed to open it");
+            printf("Error occured, %s\n", strerror(errno));
             return 1;
         }
         return 1;
@@ -126,7 +127,7 @@ int copy_file(char *path_one, char *path_two)
 
     if (access(path_one, R_OK) == -1) 
     {
-        perror("Error occured, file on source path is not readable");
+        printf("Error occured, %s\n", strerror(errno));
         return 1;
     }
     
@@ -137,10 +138,10 @@ int copy_file(char *path_one, char *path_two)
         byte_write = write(fd_two, buffer, byte_read);
         if (byte_write == -1)
         {
-            perror("Error occured while writing file two");
+            printf("Error occured, %s\n", strerror(errno));
             if (close(fd_two) == -1)
             {
-                perror("Error closing file, after failed to write it");
+                printf("Error occured, %s\n", strerror(errno));
                 return 1;
             }
             // i need to know whether return can break the loop here because here i have to break the loop because of error, so i need to know that otherwise i have to use break;
@@ -150,13 +151,13 @@ int copy_file(char *path_one, char *path_two)
 
     if (close(fd_one) == -1)
     {
-        perror("Error closing file, after reading from it");
+        printf("Error occured, %s\n", strerror(errno));
         return 1;
     }
 
     if (close(fd_two) == -1)
     {
-        perror("Error closing file, after writing in it");
+        printf("Error ocuured, %s\n", strerror(errno));
         return 1;
     }
 
