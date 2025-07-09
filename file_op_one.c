@@ -4,6 +4,7 @@
 #include <sys/stat.h>
 #include <stdio.h>
 #include <string.h>
+#include <errno.h>
 
 
 int create_file(char *path)
@@ -12,10 +13,10 @@ int create_file(char *path)
     fd = creat(path, 0644);
     if (fd == -1)
     {
-        perror("error occured while creating file");
+        printf("Error occured, %s", strerror(errno));
         if (close(fd) == -1)
         {
-            perror("error closing file, after failed to creating it");
+            printf("Error occured, %s", strerror(errno));
             return 1;
         }
         return 1;
@@ -23,7 +24,7 @@ int create_file(char *path)
 
     if (close(fd) == -1)
     {
-        perror("error closing file, after creating it");
+        printf("Error occured, %s", strerror(errno));
         return 1;
     }
 
@@ -35,7 +36,7 @@ int read_file(char *path)
 {
     if (access(path, F_OK) == -1) 
     {   
-        perror("Error occured, file do not exists on given path");
+        printf("Error occured, %s", strerror(errno));
         return 1;
     }
 
@@ -43,10 +44,10 @@ int read_file(char *path)
     fd = open(path, O_RDONLY);
     if (fd == -1)
     {
-        perror("Error occured while opening file");
+        printf("Error occured, %s", strerror(errno));
         if (close(fd) == -1)
         {
-            perror("Error closing file, after failed to open it");
+            printf("Error occured, %s", strerror(errno));
             return 1;
         }
         return 1;
@@ -54,7 +55,7 @@ int read_file(char *path)
 
     if (access(path, R_OK) == -1) 
     {
-        perror("Error occured, file is not readable");
+        printf("Error occured, %s", strerror(errno));
         return 1;
     }
 
@@ -70,10 +71,10 @@ int read_file(char *path)
 
     if (byte_read == -1)
     {
-        perror("failed to read file");
+        printf("Error occured, %s", strerror(errno));
         if (close(fd) == -1)
         {
-            perror("Error closing file, after failed to read it");
+            printf("Error occured, %s", strerror(errno));
             return 1;
         }
         return 1;
@@ -81,7 +82,7 @@ int read_file(char *path)
 
     if (close(fd) == -1)
     {
-        perror("error closing file, after reading it");
+        printf("Error occured, %s", strerror(errno));
         return 1;
     }
 
@@ -94,7 +95,7 @@ int write_file(char *path, char *text)
 
     if(access(path, F_OK) == -1) 
     {
-        perror("Error occured, file do not exists on given path");
+        printf("Error occured, %s", strerror(errno));
         return 1;
     }
 
@@ -103,10 +104,10 @@ int write_file(char *path, char *text)
     fd = open(path, O_WRONLY);
     if (fd == -1)
     {
-        perror("error occured while opening file");
+        printf("Error occured, %s", strerror(errno));
         if (close(fd) == -1)
         {
-            perror("error closing file, after failed to open it");
+            printf("Error occured, %s", strerror(errno));
             return 1;
         }
         return 1;
@@ -114,7 +115,7 @@ int write_file(char *path, char *text)
 
     if (access(path, W_OK) == -1) 
     {
-        perror("Error occured, file is not writable");
+        printf("Error occured, %s", strerror(errno));
         return 1;
     }
 
@@ -122,10 +123,10 @@ int write_file(char *path, char *text)
     byte_write = write(fd, text, strlen(text));
     if (byte_write == -1)
     {
-        perror("error occured while writing file");
+        printf("Error occured, %s", strerror(errno));
         if (close(fd) == -1)
         {
-            perror("error closing file, after failed to write it");
+            printf("Error occured, %s", strerror(errno));
             return 1;
         }
         return 1;
@@ -133,7 +134,7 @@ int write_file(char *path, char *text)
 
     if (close(fd) == -1)
     {
-        perror("error closing file, after writing it");
+        printf("Error occured, %s", strerror(errno));
         return 1;
     }
 
