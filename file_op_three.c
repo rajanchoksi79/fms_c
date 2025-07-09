@@ -10,6 +10,12 @@
 
 int states_file(char *path)
 {
+    if (access(path, F_OK) == -1) 
+    {   
+        perror("Error occured, file do not exists on given path");
+        return 1;
+    }
+
     struct stat file_details;
     if (stat(path, &file_details) == -1)
     {
@@ -30,7 +36,13 @@ int states_file(char *path)
 
 // this is basic version, i have to see more about this and also need to put filter or other things in mode or permission code that i receive.
 int change_file_permission(char *path, mode_t per_code) 
-{
+{   
+    if (access(path, F_OK) == -1) 
+    {   
+        perror("Error occured, file do not exists on given path");
+        return 1;
+    }
+
     int fd;
     fd = open(path, O_WRONLY);
     if (fd == -1) 

@@ -33,16 +33,28 @@ int create_file(char *path)
 
 int read_file(char *path)
 {
+    if (access(path, F_OK) == -1) 
+    {   
+        perror("Error occured, file do not exists on given path");
+        return 1;
+    }
+
     int fd;
     fd = open(path, O_RDONLY);
     if (fd == -1)
     {
-        perror("error occured while opening file");
+        perror("Error occured while opening file");
         if (close(fd) == -1)
         {
-            perror("error closing file, after failed to open it");
+            perror("Error closing file, after failed to open it");
             return 1;
         }
+        return 1;
+    }
+
+    if (access(path, R_OK) == -1) 
+    {
+        perror("Error occured, file is not readable");
         return 1;
     }
 
@@ -61,7 +73,7 @@ int read_file(char *path)
         perror("failed to read file");
         if (close(fd) == -1)
         {
-            perror("error closing file, after failed to read it");
+            perror("Error closing file, after failed to read it");
             return 1;
         }
         return 1;
@@ -79,6 +91,13 @@ int read_file(char *path)
 // right now it is overwriting to file.
 int write_file(char *path, char *text)
 {
+
+    if(access(path, F_OK) == -1) 
+    {
+        perror("Error occured, file do not exists on given path");
+        return 1;
+    }
+
     int fd;
     // for now i kept this as write only, if needed then change this to read and write.
     fd = open(path, O_WRONLY);
@@ -90,6 +109,12 @@ int write_file(char *path, char *text)
             perror("error closing file, after failed to open it");
             return 1;
         }
+        return 1;
+    }
+
+    if (access(path, W_OK) == -1) 
+    {
+        perror("Error occured, file is not writable");
         return 1;
     }
 
