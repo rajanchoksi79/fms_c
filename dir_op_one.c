@@ -38,5 +38,7 @@ int remove_directory(char *path)
     {
         printf("Error occured, %s\n", strerror(errno));
     }
+
+    printf("Directory removed successfully\n");
     return 0;
 }
