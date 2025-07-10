@@ -34,7 +34,7 @@ int remove_directory(char *path)
         return 1;
     }
 
-    if(remove(path) == -1) 
+    if(rmdir(path) == -1) 
     {
         printf("Error occured, %s\n", strerror(errno));
     }
