@@ -71,9 +71,9 @@ int main(int argc, char *argv[])
     {
         copy_file(path_one, path_two);
     }
-    else if (strcmp(flag, "--deletef") == 0)
+    else if (strcmp(flag, "--removef") == 0)
     {
-        delete_file(path_one);
+        remove_file(path_one);
     }
     else if (strcmp(flag, "--renamef") == 0)
     {
@@ -98,6 +98,10 @@ int main(int argc, char *argv[])
     else if (strcmp(flag, "--createdir") == 0) 
     {
         create_directory(path_one);
+    }
+    else if (strcmp(flag, "--removedir") == 0) 
+    {
+        remove_directory(path_one);
     }
     else
     {

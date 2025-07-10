@@ -7,7 +7,7 @@
 #include <errno.h>
 
 
-int delete_file(char *path)
+int remove_file(char *path)
 {
 
     if (access(path, F_OK) == -1) 

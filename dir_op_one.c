@@ -24,3 +24,19 @@ int create_directory(char *path)
     printf("New directory created successfully\n");
     return 0;
 }
+
+// this works only on empty directory.
+int remove_directory(char *path) 
+{
+    if (access(path, F_OK) == -1) 
+    {
+        printf("Error occured, %s\n", strerror(errno));
+        return 1;
+    }
+
+    if(remove(path) == -1) 
+    {
+        printf("Error occured, %s\n", strerror(errno));
+    }
+    return 0;
+}
