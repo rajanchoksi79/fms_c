@@ -8,6 +8,7 @@
 #include "file_op_one.h"
 #include "file_op_two.h"
 #include "file_op_three.h"
+#include "dir_op_one.h"
 
 
 int main(int argc, char *argv[])
@@ -93,6 +94,10 @@ int main(int argc, char *argv[])
     else if (strcmp(flag, "--help") == 0) 
     {
         help_user(); 
+    }
+    else if (strcmp(flag, "--createdir") == 0) 
+    {
+        create_directory(path_one);
     }
     else
     {

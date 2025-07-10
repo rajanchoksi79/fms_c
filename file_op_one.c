@@ -9,6 +9,12 @@
 
 int create_file(char *path)
 {
+    if (access(path, F_OK) == 0) 
+    {   
+        printf("Error occured, %s\n", strerror(errno));
+        return 1;
+    }
+    
     int fd;
     fd = creat(path, 0644);
     if (fd == -1)
