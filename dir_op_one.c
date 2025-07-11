@@ -1,6 +1,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/stat.h>
+#include <dirent.h>
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
@@ -25,6 +26,41 @@ int create_directory(char *path)
     return 0;
 }
 
+// reading and printing content of directory
+int read_directory(char *path) 
+{
+    if (access(path, F_OK) == -1) 
+    {   
+        printf("Error occured, %s\n", strerror(errno));
+        return 1;
+    }
+
+    DIR *dir = opendir(path);
+    if (dir == NULL) 
+    {
+        printf("Error occured, %s\n", strerror(errno));
+        if (closedir(dir) == -1) 
+        {
+            printf("Error occured, %s\n", strerror(errno));
+            return 1;
+        }
+        return 1;
+    }
+
+    struct dirent *entry;
+    while ((entry = readdir(dir)) != NULL) 
+    {
+        printf("%s\n", entry);
+    }
+
+    if (closedir(dir) == -1) 
+    {
+        printf("Error occured, %s\n", strerror(errno));
+        return 1;
+    }
+    return 0;
+}
+
 // this works only on empty directory.
 int remove_directory(char *path) 
 {
@@ -37,6 +73,7 @@ int remove_directory(char *path)
     if(rmdir(path) == -1) 
     {
         printf("Error occured, %s\n", strerror(errno));
+        return 1;
     }
 
     printf("Directory removed successfully\n");

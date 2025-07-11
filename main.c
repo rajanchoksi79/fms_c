@@ -99,6 +99,10 @@ int main(int argc, char *argv[])
     {
         create_directory(path_one);
     }
+    else if (strcmp(flag, "--readdir") == 0) 
+    {
+        read_directory(path_one);
+    }
     else if (strcmp(flag, "--removedir") == 0) 
     {
         remove_directory(path_one);
