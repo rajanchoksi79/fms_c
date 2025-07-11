@@ -50,7 +50,11 @@ int read_directory(char *path)
     struct dirent *entry;
     while ((entry = readdir(dir)) != NULL) 
     {
-        printf("%s\n", entry);
+        if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0) 
+        {
+            continue;
+        }
+        printf("%s\n", entry->d_name);
     }
 
     if (closedir(dir) == -1) 
