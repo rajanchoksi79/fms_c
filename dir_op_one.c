@@ -49,6 +49,7 @@ int read_directory(char *path)
 
     struct dirent *entry;
     struct stat file_detail;
+    char full_path[PATH_MAX];
     while ((entry = readdir(dir)) != NULL)
     {
         if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
@@ -56,7 +57,34 @@ int read_directory(char *path)
             continue;
         }
 
-        printf("%s\t", entry->d_name);
+        snprintf(full_path, sizeof(full_path), "%s/%s", path, entry->d_name);
+
+        printf("%s", entry->d_name);
+        
+        if (stat(full_path, &file_detail) == 0)
+        {
+            if ((file_detail.st_mode & S_IFMT) == S_IFREG)
+            {
+                printf("   [File]\n");
+            }
+            else if ((file_detail.st_mode & S_IFMT) == S_IFDIR)
+            {
+                printf("   [Directory]\n");
+            }
+            else if ((file_detail.st_mode & S_IFMT) == S_IFLNK)
+            {
+                printf("   [Link]\n");
+            }
+            else
+            {
+                printf("   [Other]\n");
+            }
+        }
+        else 
+        {
+            printf("Error occured, %s\n", strerror(errno));
+            return 1;
+        }
     }
 
     printf("\n");
