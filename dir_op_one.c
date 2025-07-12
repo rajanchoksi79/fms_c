@@ -50,6 +50,12 @@ int read_directory(char *path)
     struct dirent *entry;
     struct stat file_detail;
     char full_path[PATH_MAX];
+    
+    int file_count = 0;
+    int directory_count = 0; 
+    int link_count = 0; 
+    int other_count = 0;
+
     while ((entry = readdir(dir)) != NULL)
     {
         if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
@@ -66,18 +72,22 @@ int read_directory(char *path)
             if ((file_detail.st_mode & S_IFMT) == S_IFREG)
             {
                 printf("   [File]\n");
+                file_count += 1;
             }
             else if ((file_detail.st_mode & S_IFMT) == S_IFDIR)
             {
                 printf("   [Directory]\n");
+                directory_count += 1;
             }
             else if ((file_detail.st_mode & S_IFMT) == S_IFLNK)
             {
                 printf("   [Link]\n");
+                link_count += 1;
             }
             else
             {
                 printf("   [Other]\n");
+                other_count += 1;
             }
         }
         else 
@@ -88,6 +98,7 @@ int read_directory(char *path)
     }
 
     printf("\n");
+    printf("File count: %d, Directory count: %d, Link count: %d, other count: %d\n", file_count, directory_count, link_count, other_count);
 
     if (closedir(dir) == -1)
     {
