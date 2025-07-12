@@ -1,3 +1,4 @@
+#define _DEFAULT_SOURCE
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/stat.h>
@@ -55,32 +56,10 @@ int read_directory(char *path)
             continue;
         }
 
-        printf("%s", entry->d_name);
-
-        if (stat(path, &file_detail) == 0)
-        {
-            if (S_ISREG(file_detail.st_mode))
-            {
-                printf("    [File]\n");
-            }
-            else if (S_ISDIR(file_detail.st_mode))
-            {
-                printf("    [Directory]\n");
-            }
-            else if (S_ISLNK(file_detail.st_mode))
-            {
-                printf("    [Link]\n");
-            }
-            else
-            {
-                printf("    [Other]\n");
-            }
-        }
-        else 
-        {
-            printf("Error occured, %s\n", strerror(errno));
-        }
+        printf("%s\t", entry->d_name);
     }
+
+    printf("\n");
 
     if (closedir(dir) == -1)
     {
