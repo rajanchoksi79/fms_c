@@ -47,31 +47,39 @@ int read_directory(char *path)
     }
 
     struct dirent *entry;
+    struct stat file_detail;
     while ((entry = readdir(dir)) != NULL)
     {
         if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
         {
             continue;
         }
-        
-        // remove \n from below when you use that switch case below line below
-        printf("%s\n", entry->d_name);
 
-        // switch (entry->d_type)
-        // {
-        // case DT_REG:
-        //     printf(" [File]\n");
-        //     break;
-        // case DT_DIR:
-        //     printf(" [Directory]\n");
-        //     break;
-        // case DT_LINK:
-        //     printf(" [Link]\n");
-        //     break;
-        // default:
-        //     printf(" [Other]");
-        //     break;
-        // }
+        printf("%s", entry->d_name);
+
+        if (stat(path, &file_detail) == 0)
+        {
+            if (S_ISREG(file_detail.st_mode))
+            {
+                printf("    [File]\n");
+            }
+            else if (S_ISDIR(file_detail.st_mode))
+            {
+                printf("    [Directory]\n");
+            }
+            else if (S_ISLNK(file_detail.st_mode))
+            {
+                printf("    [Link]\n");
+            }
+            else
+            {
+                printf("    [Other]\n");
+            }
+        }
+        else 
+        {
+            printf("Error occured, %s\n", strerror(errno));
+        }
     }
 
     if (closedir(dir) == -1)
