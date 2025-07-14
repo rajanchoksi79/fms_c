@@ -108,7 +108,7 @@ int read_directory(char *path)
     return 0;
 }
 
-// to get presenet working directory
+// to get present working directory
 int get_current_directory() 
 {
     char buffer[PATH_MAX];

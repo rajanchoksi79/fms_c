@@ -8,7 +8,7 @@
 #include "file_op_one.h"
 #include "file_op_two.h"
 #include "file_op_three.h"
-#include "dir_op_one.h"
+#include "../headers/dir_op_one.h"
 
 
 int main(int argc, char *argv[])
