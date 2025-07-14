@@ -18,6 +18,9 @@ int main(int argc, char *argv[])
     char *text, *path_two;
     mode_t permission_code;
 
+    // this is temp code will remove this.
+    printf("number of args: %d\n", argc);
+
     if (strcmp(flag, "--writef") == 0)
     {
         if (argv[3] == NULL)

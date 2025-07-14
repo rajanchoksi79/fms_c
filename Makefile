@@ -1,11 +1,42 @@
+# Compiler and flags
 CC = gcc
-CFLANGS = -Iinclude -Wall -Wextra -g
+CFLAGS = -Iinclude -Wall -Wextra -g
 
-SRC = src/main.c src/file_op_one.c src/file_op_two.c src/file_op_three.c src/dir_op_one.c 
-OUT = build/fms
+# Directories
+SRC_DIR = src
+INC_DIR = include
+BUILD_DIR = build
 
-all:
-    $(CC) $(CFLANGS) $(SRC) -o $(OUT)
+# Source files and object files
+SRC = $(wildcard $(SRC_DIR)/*.c)
+OBJ = $(SRC:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 
+# Output binary
+OUT = $(BUILD_DIR)/fms
+
+# Default target
+all: $(BUILD_DIR) $(OUT)
+
+# Link object files into final binary
+$(OUT): $(OBJ)
+	$(CC) $(CFLAGS) $^ -o $@
+
+# Compile .c to .o
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Create build directory if it doesn't exist
+$(BUILD_DIR):
+	mkdir -p $(BUILD_DIR)
+
+# Clean build
 clean:
-    rm -f $(OUT)    
+	rm -rf $(BUILD_DIR)
+
+# Run the compiled binary
+run: all
+	./$(OUT)
+
+# Debug with gdb
+debug: all
+	gdb ./$(OUT)
