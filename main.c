@@ -103,6 +103,10 @@ int main(int argc, char *argv[])
     {
         read_directory(path_one);
     }
+    else if (strcmp(flag, "--currentdir") == 0) 
+    {
+        get_current_directory();
+    }
     else if (strcmp(flag, "--removedir") == 0) 
     {
         remove_directory(path_one);

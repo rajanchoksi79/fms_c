@@ -108,6 +108,22 @@ int read_directory(char *path)
     return 0;
 }
 
+// to get presenet working directory
+int get_current_directory() 
+{
+    char buffer[PATH_MAX];
+    
+    if (getcwd(buffer,sizeof(buffer)) == NULL) 
+    {
+        printf("Error occured, %s\n", strerror(errno));
+        return 1;
+    }
+
+    printf("Current working directory: ");
+    printf("%s\n", buffer);
+    return 0;
+}
+
 // this works only on empty directory.
 int remove_directory(char *path)
 {
