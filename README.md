@@ -90,7 +90,7 @@ fms/
 
 * This tool is currently **work-in-progress**.
 * Intended as a personal learning + utility project.
-* Future plans may include porting to C++ or using CLI frameworks for better parsing.
+* Future plans may include porting to C++ or using CLI frameworks for better parsing or rewriting in Rust.
 
 ---
 

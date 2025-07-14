@@ -145,6 +145,6 @@ int write_file(char *path, char *text)
         return 1;
     }
 
-    printf("Success: text written to file successfully\n");
+    printf("Given text written to file successfully\n");
     return 0;
 }

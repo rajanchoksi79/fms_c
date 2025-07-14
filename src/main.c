@@ -5,6 +5,7 @@
 #include <sys/stat.h>
 #include <stdio.h>
 #include <string.h>
+#include <errno.h>
 #include "../include/file_op_one.h"
 #include "../include/file_op_two.h"
 #include "../include/file_op_three.h"
@@ -13,19 +14,19 @@
 
 int main(int argc, char *argv[])
 {
+    // this is unused so making it void for now, will see if i want to keep this or find another solution.
+    (void)argc;
+
     char *flag = argv[1];
     char *path_one = argv[2];
     char *text, *path_two;
     mode_t permission_code;
 
-    // this is temp code will remove this.
-    printf("number of args: %d\n", argc);
-
     if (strcmp(flag, "--writef") == 0)
     {
         if (argv[3] == NULL)
         {
-            perror("please provide text to write in given file");
+            printf("Error occured, %s\n", strerror(errno));
             return 1;
         }
         text = argv[3];
@@ -35,7 +36,7 @@ int main(int argc, char *argv[])
     {
         if (argv[3] == NULL)
         {
-            perror("please provide new path where you want to copy file one");
+            printf("Error occured, %s\n", strerror(errno));
             return 1;
         }
         path_two = argv[3];
@@ -46,7 +47,7 @@ int main(int argc, char *argv[])
     {   
         if (argv[3] == NULL) 
         {
-            perror("please provide permission code to change permission of file");
+            printf("Error occured, %s\n", strerror(errno));
             return 1;
         }
         permission_code = parse_octal_mode(argv[3]);
