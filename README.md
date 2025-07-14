@@ -55,11 +55,25 @@ gcc -o fms main.c file_op_one.c file_op_two.c file_op_three.c dir_op_one.c
 
 ```
 fms/
-├── main.c             # Entry point, argument parsing
-├── file_op_one.c/h    # File-related operations
-├── file_op_two.c/h    # File-related operations
-├── file_op_three.c/h  # File-related operations
-├── dir_op_one.c/h        # Directory-related operations
+├── build
+    ├── dir_op_one.o
+    ├── file_op_one.o
+    ├── file_op_two.o
+    ├── file_op_three.o
+    ├── fms
+    ├── main.o
+├── include
+    ├── dir_op_one.h
+    ├── file_op_one.h
+    ├── file_op_two.h
+    ├── file_op_three.h               
+├── src 
+    ├── dir_op_one.c                
+    ├── file_op_one.c
+    ├── file_op_two.c
+    ├── file_op_three.c
+├── .gitignore
+├── Makefile
 ├── README.md
 ```
 
