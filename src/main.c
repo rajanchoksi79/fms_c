@@ -5,10 +5,10 @@
 #include <sys/stat.h>
 #include <stdio.h>
 #include <string.h>
-#include "file_op_one.h"
-#include "file_op_two.h"
-#include "file_op_three.h"
-#include "../headers/dir_op_one.h"
+#include "../include/file_op_one.h"
+#include "../include/file_op_two.h"
+#include "../include/file_op_three.h"
+#include "../include/dir_op_one.h"
 
 
 int main(int argc, char *argv[])

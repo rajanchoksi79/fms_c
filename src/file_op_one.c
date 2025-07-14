@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
+#include "../include/file_op_one.h"
 
 
 int create_file(char *path)

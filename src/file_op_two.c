@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
+#include "../include/file_op_two.h"
 
 
 int remove_file(char *path)
