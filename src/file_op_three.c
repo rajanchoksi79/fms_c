@@ -102,8 +102,3 @@ mode_t parse_octal_mode(char *input)
 
     return (mode_t)permission_code;
 }
-
-int help_user() 
-{
-    printf("here i will print all the help related things like kind of guide to user about how to use app and different flags\n");
-}

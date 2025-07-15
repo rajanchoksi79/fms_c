@@ -10,6 +10,7 @@
 #include "../include/file_op_two.h"
 #include "../include/file_op_three.h"
 #include "../include/dir_op_one.h"
+#include "../include/mis_op_one.h"
 
 
 int main(int argc, char *argv[])
@@ -33,6 +34,14 @@ int main(int argc, char *argv[])
         else if (strcmp(flag, "--help") == 0) 
         {
             help_user(); 
+        }
+        else if (strcmp(flag, "--about") == 0) 
+        {
+            about();
+        }
+        else if (strcmp(flag, "--version") == 0) 
+        {
+            version();
         }
         else
         {
