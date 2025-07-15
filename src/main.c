@@ -14,8 +14,11 @@
 
 int main(int argc, char *argv[])
 {
-    // this is unused so making it void for now, will see if i want to keep this or find another solution.
-    (void)argc;
+    
+    if (argc < 2) 
+    {
+        help_user();
+    }
 
     char *flag = argv[1];
     char *path_one = argv[2];
