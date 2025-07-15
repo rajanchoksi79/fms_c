@@ -45,8 +45,7 @@ int main(int argc, char *argv[])
         }
         else
         {
-            printf("please provide appropriate flag\n");
-            // add flag details to display to user.
+            appropriate_flag();
         }
     }
     else if (argc < 4) 
