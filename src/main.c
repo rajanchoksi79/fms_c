@@ -82,6 +82,10 @@ int main(int argc, char *argv[])
         {
             remove_directory(path_one);
         }
+        else if (strcmp(flag, "--mvdir") == 0) 
+        {
+            move_directory(path_one);
+        }
         else
         {
             printf("please provide appropriate flag\n");
