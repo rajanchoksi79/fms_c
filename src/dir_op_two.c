@@ -1,8 +1,10 @@
 #define _DEFAULT_SOURCE
+#define _XOPEN_SOURCE 500
 #include <fcntl.h>
 #include <stdio.h>
 #include <sys/stat.h>
 #include <dirent.h>
+#include <ftw.h>
 #include <unistd.h>
 #include <string.h>
 #include <errno.h>
@@ -20,7 +22,47 @@ int move_directory(char *rel_path)
     return 0;
 }
 
-int read_directory_rec() 
+int print_directory_content(const char *rel_path, const struct stat *stat_buf, int typeflag, struct FTW *ftw_buf) 
+{   
+    // this is temp
+    (void) stat_buf;
+
+    for (int i = 0; i < ftw_buf->level; i++) 
+    {
+        printf(" ");
+    }        
+
+    switch (typeflag) 
+    {
+        case FTW_D:
+            printf("|_%s - [Directory]\n", rel_path);
+            break;
+        case FTW_F:
+            printf("|_%s - [File]\n", rel_path);
+            break;        
+        default:
+            printf("|_%s - [Other]\n", rel_path);    
+    }
+
+    return 0;
+}
+
+int read_directory_rec(char *path) 
 {
+
+    if (access(path, F_OK) == -1)
+    {
+        printf("Error occured, %s\n", strerror(errno));
+        return 1;
+    }
+
+    // for now i am keeping this 10, change it if you need to.
+    int max_no_directory = 20;
+    if (nftw(path, print_directory_content, max_no_directory, FTW_PHYS) == -1) 
+    {
+        printf("Error occured, %s\n", strerror(errno));
+        return 1;
+    }
+
     return 0;
 }

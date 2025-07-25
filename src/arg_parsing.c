@@ -86,6 +86,10 @@ int arg_parser(int argc, char *argv[])
         {
             move_directory(path_one);
         }
+        else if (strcmp(flag, "--readdirr") == 0) 
+        {
+            read_directory_rec(path_one);
+        }
         else
         {
             appropriate_flag();
