@@ -22,6 +22,10 @@ int move_directory(char *rel_path)
     return 0;
 }
 
+// this is kind of global variable, but if needed put it somewhere if this is not safer option.
+int file_count = 0;
+int directory_count = 0;
+
 int print_directory_content(const char *rel_path, const struct stat *stat_buf, int typeflag, struct FTW *ftw_buf) 
 {   
     // this is temp
@@ -29,19 +33,21 @@ int print_directory_content(const char *rel_path, const struct stat *stat_buf, i
 
     for (int i = 0; i < ftw_buf->level; i++) 
     {
-        printf(" ");
+        printf("    ");
     }        
 
     switch (typeflag) 
     {
         case FTW_D:
-            printf("|_%s - [Directory]\n", rel_path);
+            printf("|__ %s - [Directory]\n", rel_path);
+            directory_count++;
             break;
         case FTW_F:
-            printf("|_%s - [File]\n", rel_path);
+            printf("|_ %s - [File]\n", rel_path);
+            file_count++;
             break;        
         default:
-            printf("|_%s - [Other]\n", rel_path);    
+            printf("|_ %s - [Other]\n", rel_path);    
     }
 
     return 0;
@@ -64,5 +70,6 @@ int read_directory_rec(char *path)
         return 1;
     }
 
+    printf("\n%d Directories, %d Files\n", directory_count, file_count);
     return 0;
 }
