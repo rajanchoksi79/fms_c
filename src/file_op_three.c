@@ -8,6 +8,7 @@
 #include <time.h>
 #include <errno.h>
 #include "../include/file_op_three.h"
+#include "../include/colors.h"
 
 
 int states_file(char *path)
@@ -26,13 +27,14 @@ int states_file(char *path)
     }
 
     // after understanding this sys call, update these details below with what you want to display.
-    printf("File info: \n\n");
-    printf("File size: %ld bytes\n", file_details.st_size);
-    printf("Owner UID: %d\n", file_details.st_uid);
-    printf("Group UID: %d\n", file_details.st_gid);
-    printf("Permissions: %04o\n", file_details.st_mode & 0777);
-    printf("Last accessed: %s", ctime(&file_details.st_atime));
-    printf("Last modified: %s", ctime(&file_details.st_mtime));
+    printf(COLOR_CYAN COLOR_BOLD "\nFile info: \n\n" COLOR_RESET);
+    printf("%-20s %ld bytes\n", "File size:", file_details.st_size);
+    printf("%-20s %d\n", "Owner UID:", file_details.st_uid);
+    printf("%-20s %d\n", "Group UID:", file_details.st_gid);
+    printf("%-20s %04o\n", "Permissions:", file_details.st_mode & 0777);
+    printf("%-20s %s", "Last accessed:", ctime(&file_details.st_atime));
+    printf("%-20s %s", "Last modified:", ctime(&file_details.st_mtime));
+    printf("\n");
     return 0;
 }
 
