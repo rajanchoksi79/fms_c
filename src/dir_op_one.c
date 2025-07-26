@@ -7,6 +7,7 @@
 #include <string.h>
 #include <errno.h>
 #include "../include/dir_op_one.h"
+#include "../include/colors.h"
 
 
 int create_directory(char *path)
@@ -55,8 +56,9 @@ int read_directory(char *path)
     
     int file_count = 0;
     int directory_count = 0; 
-    int link_count = 0; 
-    int other_count = 0;
+
+    // new line before printing any detail from below.
+    printf("\n");
 
     while ((entry = readdir(dir)) != NULL)
     {
@@ -67,29 +69,25 @@ int read_directory(char *path)
 
         snprintf(full_path, sizeof(full_path), "%s/%s", path, entry->d_name);
 
-        printf("%s", entry->d_name);
-        
         if (stat(full_path, &file_detail) == 0)
         {
             if ((file_detail.st_mode & S_IFMT) == S_IFREG)
             {
-                printf("   [File]\n");
+                printf("|_ %s\n", entry->d_name);
                 file_count += 1;
             }
             else if ((file_detail.st_mode & S_IFMT) == S_IFDIR)
             {
-                printf("   [Directory]\n");
+                printf(COLOR_CYAN "|_ %s\n" COLOR_RESET, entry->d_name);
                 directory_count += 1;
             }
             else if ((file_detail.st_mode & S_IFMT) == S_IFLNK)
             {
-                printf("   [Link]\n");
-                link_count += 1;
+                printf(COLOR_GREEN "|_ %s\n" COLOR_RESET, entry->d_name);
             }
             else
             {
-                printf("   [Other]\n");
-                other_count += 1;
+                printf("|_ %s\n", entry->d_name);
             }
         }
         else 
@@ -100,7 +98,7 @@ int read_directory(char *path)
     }
 
     printf("\n");
-    printf("File count: %d, Directory count: %d, Link count: %d, other count: %d\n", file_count, directory_count, link_count, other_count);
+    printf(COLOR_YELLOW COLOR_BOLD "--> File count: %d, Directory count: %d\n\n" COLOR_RESET, file_count, directory_count);
 
     if (closedir(dir) == -1)
     {
@@ -121,8 +119,7 @@ int get_current_directory()
         return 1;
     }
 
-    printf("Current working directory: ");
-    printf("%s\n", buffer);
+    printf(COLOR_CYAN COLOR_BOLD "\n-> %s\n\n" COLOR_RESET, buffer);
     return 0;
 }
 
