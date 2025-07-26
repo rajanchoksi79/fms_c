@@ -13,6 +13,7 @@
 #include "../include/dir_op_two.h"
 #include "../include/mis_op_one.h"
 #include "../include/arg_parsing.h"
+#include "../include/colors.h"
 
 int main(int argc, char *argv[])
 {

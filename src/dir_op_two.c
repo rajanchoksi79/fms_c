@@ -9,6 +9,7 @@
 #include <string.h>
 #include <errno.h>
 #include "../include/dir_op_two.h"
+#include "../include/colors.h"
 
 int move_directory(char *rel_path) 
 {
@@ -39,15 +40,15 @@ int print_directory_content(const char *rel_path, const struct stat *stat_buf, i
     switch (typeflag) 
     {
         case FTW_D:
-            printf("|__ %s - [Directory]\n", rel_path);
+            printf(COLOR_CYAN "|__ %s\n" COLOR_RESET, rel_path);
             directory_count++;
             break;
         case FTW_F:
-            printf("|_ %s - [File]\n", rel_path);
+            printf("|_ %s\n", rel_path);
             file_count++;
             break;        
         default:
-            printf("|_ %s - [Other]\n", rel_path);    
+            printf("|_ %s\n", rel_path);    
     }
 
     return 0;

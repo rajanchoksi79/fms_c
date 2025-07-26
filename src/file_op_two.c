@@ -7,12 +7,11 @@
 #include <errno.h>
 #include "../include/file_op_two.h"
 
-
 int remove_file(char *path)
 {
 
-    if (access(path, F_OK) == -1) 
-    {   
+    if (access(path, F_OK) == -1)
+    {
         printf("Error occured, %s\n", strerror(errno));
         return 1;
     }
@@ -27,42 +26,29 @@ int remove_file(char *path)
     return 0;
 }
 
+// there is error in rename that i need to solve.
 int rename_file(char *path_one, char *path_two)
 {
-    if (access(path_one, F_OK) == -1) 
-    {   
+    if (access(path_one, F_OK) == -1)
+    {
         printf("Error occured, %s\n", strerror(errno));
         return 1;
     }
 
-    if (path_one != path_two)
+    if (rename(path_one, path_two) == -1)
     {
-        printf("Error occured, rename do not work when both directory are not the same with different file name\n");
+        printf("Error occured, %s\n", strerror(errno));
         return 1;
     }
-    else
-    {
-        if (rename(path_one, path_two) == -1)
-        {
-            printf("Error occured, %s\n", strerror(errno));
-            return 1;
-        }
 
-        printf("File renamed successfully\n");
-        return 0;
-    }
+    printf("File renamed successfully\n");
+    return 0;
 }
 
 int move_file(char *path_one, char *path_two)
 {
-    if (access(path_one, F_OK) == -1) 
-    {   
-        printf("Error occured, %s\n", strerror(errno));
-        return 1;
-    }
-
-    if (access(path_two, F_OK) == -1) 
-    {   
+    if (access(path_one, F_OK) == -1)
+    {
         printf("Error occured, %s\n", strerror(errno));
         return 1;
     }
@@ -88,14 +74,14 @@ int move_file(char *path_one, char *path_two)
 // what if both file are created already.
 int copy_file(char *path_one, char *path_two)
 {
-    if (access(path_one, F_OK) == -1) 
-    {   
+    if (access(path_one, F_OK) == -1)
+    {
         printf("Error occured, %s\n", strerror(errno));
         return 1;
     }
 
-    if (access(path_two, F_OK) == -1) 
-    {   
+    if (access(path_two, F_OK) == -1)
+    {
         printf("Error occured, %s\n", strerror(errno));
         return 1;
     }
@@ -126,12 +112,12 @@ int copy_file(char *path_one, char *path_two)
         return 1;
     }
 
-    if (access(path_one, R_OK) == -1) 
+    if (access(path_one, R_OK) == -1)
     {
         printf("Error occured, %s\n", strerror(errno));
         return 1;
     }
-    
+
     ssize_t byte_read, byte_write;
     char buffer[128];
     while ((byte_read = read(fd_one, buffer, sizeof(buffer))) > 0)
