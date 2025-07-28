@@ -34,7 +34,7 @@ int print_directory_content(const char *rel_path, const struct stat *stat_buf, i
 
     for (int i = 0; i < ftw_buf->level; i++) 
     {
-        printf("    ");
+        printf("|    ");
     }        
 
     switch (typeflag) 
@@ -63,6 +63,8 @@ int read_directory_rec(char *path)
         return 1;
     }
 
+    printf("\n");
+    
     // for now i am keeping this 10, change it if you need to.
     int max_no_directory = 20;
     if (nftw(path, print_directory_content, max_no_directory, FTW_PHYS) == -1) 
@@ -71,6 +73,6 @@ int read_directory_rec(char *path)
         return 1;
     }
 
-    printf("\n%d Directories, %d Files\n", directory_count, file_count);
+    printf(COLOR_YELLOW COLOR_BOLD "\n--> %d Directories, %d Files\n\n" COLOR_RED, directory_count, file_count);
     return 0;
 }

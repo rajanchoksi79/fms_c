@@ -98,7 +98,7 @@ int read_directory(char *path)
     }
 
     printf("\n");
-    printf(COLOR_YELLOW COLOR_BOLD "--> File count: %d, Directory count: %d\n\n" COLOR_RESET, file_count, directory_count);
+    printf(COLOR_YELLOW COLOR_BOLD "--> %d Directories, %d Files\n\n" COLOR_RESET, directory_count, file_count);
 
     if (closedir(dir) == -1)
     {
