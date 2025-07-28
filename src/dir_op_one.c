@@ -73,17 +73,17 @@ int read_directory(char *path)
         {
             if ((file_detail.st_mode & S_IFMT) == S_IFREG)
             {
-                printf("|_ %s\n", entry->d_name);
+                printf("├── %s\n", entry->d_name);
                 file_count += 1;
             }
             else if ((file_detail.st_mode & S_IFMT) == S_IFDIR)
             {
-                printf(COLOR_CYAN "|_ %s\n" COLOR_RESET, entry->d_name);
+                printf("├── " COLOR_CYAN  "%s\n" COLOR_RESET, entry->d_name);
                 directory_count += 1;
             }
             else if ((file_detail.st_mode & S_IFMT) == S_IFLNK)
             {
-                printf(COLOR_GREEN "|_ %s\n" COLOR_RESET, entry->d_name);
+                printf(COLOR_GREEN "├── %s\n" COLOR_RESET, entry->d_name);
             }
             else
             {
@@ -97,8 +97,8 @@ int read_directory(char *path)
         }
     }
 
-    printf("\n");
-    printf(COLOR_YELLOW COLOR_BOLD "--> %d Directories, %d Files\n\n" COLOR_RESET, directory_count, file_count);
+    printf(COLOR_YELLOW COLOR_BOLD "\n-> %d %s, " COLOR_RESET, directory_count, directory_count == 1  ? "Directory" : "Directories"); 
+    printf(COLOR_YELLOW COLOR_BOLD "%d %s\n\n" COLOR_RESET, file_count, file_count == 1 ? "File" : "Files");
 
     if (closedir(dir) == -1)
     {

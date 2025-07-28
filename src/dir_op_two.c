@@ -27,6 +27,12 @@ int move_directory(char *rel_path)
 int file_count = 0;
 int directory_count = 0;
 
+const char *get_basename(const char *rel_path) 
+{
+    const char *slash = strrchr(rel_path, '/');
+    return slash ? slash + 1 : rel_path;
+}
+
 int print_directory_content(const char *rel_path, const struct stat *stat_buf, int typeflag, struct FTW *ftw_buf) 
 {   
     // this is temp
@@ -34,21 +40,21 @@ int print_directory_content(const char *rel_path, const struct stat *stat_buf, i
 
     for (int i = 0; i < ftw_buf->level; i++) 
     {
-        printf("|    ");
+        printf("│  ");
     }        
 
     switch (typeflag) 
     {
         case FTW_D:
-            printf(COLOR_CYAN "|__ %s\n" COLOR_RESET, rel_path);
+            printf("├── " COLOR_CYAN "%s\n" COLOR_RESET, get_basename(rel_path));
             directory_count++;
             break;
         case FTW_F:
-            printf("|_ %s\n", rel_path);
+            printf("├── %s\n", get_basename(rel_path));
             file_count++;
             break;        
         default:
-            printf("|_ %s\n", rel_path);    
+            printf("├── %s\n", get_basename(rel_path));    
     }
 
     return 0;
@@ -63,7 +69,7 @@ int read_directory_rec(char *path)
         return 1;
     }
 
-    printf("\n");
+    printf(COLOR_CYAN COLOR_BOLD "\n%s\n\n" COLOR_RESET, path);
     
     // for now i am keeping this 10, change it if you need to.
     int max_no_directory = 20;
@@ -73,6 +79,7 @@ int read_directory_rec(char *path)
         return 1;
     }
 
-    printf(COLOR_YELLOW COLOR_BOLD "\n--> %d Directories, %d Files\n\n" COLOR_RED, directory_count, file_count);
+    printf(COLOR_YELLOW COLOR_BOLD "\n-> %d %s, " COLOR_RESET, directory_count, directory_count == 1  ? "Directory" : "Directories"); 
+    printf(COLOR_YELLOW COLOR_BOLD "%d %s\n\n" COLOR_RESET, file_count, file_count == 1 ? "File" : "Files");
     return 0;
 }
