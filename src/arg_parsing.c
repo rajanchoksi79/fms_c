@@ -90,6 +90,10 @@ int arg_parser(int argc, char *argv[])
         {
             read_directory_rec(path_one);
         }
+        else if (strcmp(flag, "--removedirr") == 0) 
+        {
+            remove_directory_rec(path_one);
+        }
         else
         {
             appropriate_flag();

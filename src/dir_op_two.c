@@ -83,3 +83,41 @@ int read_directory_rec(char *path)
     printf(COLOR_YELLOW COLOR_BOLD "%d %s\n\n" COLOR_RESET, file_count, file_count == 1 ? "File" : "Files");
     return 0;
 }
+
+int remove_directory_content(const char *rel_path, const struct stat *stat_buf, int typeflag, struct FTW *ftw_buf) 
+{
+    (void) typeflag;
+    (void) stat_buf;
+
+    for (int i = 0; i < ftw_buf->level; i++) 
+    {
+        // because remove can call both unlink or rmdir based on being a file or a directory, so i am using it here.
+        if (remove(rel_path) == -1) 
+        {
+            printf("Error occured, %s\n", strerror(errno));
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
+int remove_directory_rec(char *path) 
+{
+    if (access(path, F_OK) == -1) 
+    {
+        printf("Error occured, %s\n", strerror(errno));
+        return 1;
+    }
+
+    // for now i am keeping this 20 change it if you need more.
+    int max_no_directory = 20;
+    if (nftw(path, remove_directory_content, max_no_directory, FTW_PHYS) == -1) 
+    {
+        printf("Error occured, %s\n", strerror(errno));
+        return 1;
+    }
+
+    printf("Directory and it's content removed successfully\n");
+    return 0;
+}
