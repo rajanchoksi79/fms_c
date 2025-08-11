@@ -4,7 +4,9 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <stdio.h>
+#include <iostream>
 #include <string.h>
+#include <string>
 #include <errno.h>
 #include "../include/file_op_one.h"
 #include "../include/file_op_two.h"
@@ -14,10 +16,11 @@
 #include "../include/mis_op_one.h"
 #include "../include/arg_parsing.h"
 
-
 int arg_parser(int argc, char *argv[]) 
 {
-    char *flag, *path_one, *path_two, *text;
+    std::string flag;
+    char *path_one, *path_two, *text;
+
     mode_t permission_code;
 
     if (argc < 2) 
@@ -28,19 +31,19 @@ int arg_parser(int argc, char *argv[])
     {
         flag = argv[1];
 
-        if (strcmp(flag, "--currentdir") == 0) 
+        if (flag == "--currentdir") 
         {
             get_current_directory();
         }
-        else if (strcmp(flag, "--help") == 0) 
+        else if (flag == "--help") 
         {
             help_user(); 
         }
-        else if (strcmp(flag, "--about") == 0) 
+        else if (flag == "--about") 
         {
             about();
         }
-        else if (strcmp(flag, "--version") == 0) 
+        else if (flag == "--version") 
         {
             version();
         }
@@ -54,43 +57,43 @@ int arg_parser(int argc, char *argv[])
         flag = argv[1];
         path_one = argv[2];
 
-        if (strcmp(flag, "--createf") == 0)
+        if (flag == "--createf")
         {
             create_file(path_one);
         }
-        else if (strcmp(flag, "--readf") == 0)
+        else if (flag == "--readf")
         {
             read_file(path_one);
         }
-        else if (strcmp(flag, "--removef") == 0)
+        else if (flag == "--removef")
         {
             remove_file(path_one);
         }
-        else if (strcmp(flag, "--detailf") == 0)
+        else if (flag == "--detailf")
         {
             states_file(path_one);
         }
-        else if (strcmp(flag, "--createdir") == 0) 
+        else if (flag == "--createdir") 
         {
             create_directory(path_one);
         }
-        else if (strcmp(flag, "--readdir") == 0) 
+        else if (flag == "--readdir") 
         {
             read_directory(path_one);
         }
-        else if (strcmp(flag, "--removedir") == 0) 
+        else if (flag == "--removedir") 
         {
             remove_directory(path_one);
         }
-        else if (strcmp(flag, "--mvdir") == 0) 
+        else if (flag == "--mvdir") 
         {
             move_directory(path_one);
         }
-        else if (strcmp(flag, "--readdirr") == 0) 
+        else if (flag == "--readdirr") 
         {
             read_directory_rec(path_one);
         }
-        else if (strcmp(flag, "--removedirr") == 0) 
+        else if (flag == "--removedirr") 
         {
             remove_directory_rec(path_one);
         }
@@ -104,44 +107,44 @@ int arg_parser(int argc, char *argv[])
         flag = argv[1];
         path_one = argv[2];
 
-        if (strcmp(flag, "--writef") == 0)
+        if (flag == "--writef")
         {
             if (argv[3] == NULL)
             {
-                printf("Error occured, %s\n", strerror(errno));
+                std::cerr << "Error occured " << strerror(errno) << std::endl;
                 return 1;
             }
             text = argv[3];
             write_file(path_one, text);
         }
-        else if (strcmp(flag, "--copyf") == 0 || strcmp(flag, "--movef") == 0 || strcmp(flag, "--renamef") == 0)
+        else if (flag == "--copyf" || flag == "--movef" || flag == "--renamef")
         {
             if (argv[3] == NULL)
             {
-                printf("Error occured, %s\n", strerror(errno));
+                std::cerr << "Error occured " << strerror(errno) << std::endl;
                 return 1;
             }
             path_two = argv[3];
 
-            if (strcmp(flag, "--copyf") == 0)
+            if (flag == "--copyf")
             {
                 copy_file(path_one, path_two);
             }
-            else if (strcmp(flag, "--movef") == 0)
+            else if (flag == "--movef")
             {
                 move_file(path_one, path_two);
             }
-            else if (strcmp(flag, "--renamef") == 0)
+            else if (flag == "--renamef")
             {
                 rename_file(path_one, path_two);
             }
         }
         // refactore and fix this, this is temp.
-        else if (strcmp(flag, "--changeperf") == 0) 
+        else if (flag == "--changeperf") 
         {   
             if (argv[3] == NULL) 
             {
-                printf("Error occured, %s\n", strerror(errno));
+                std::cerr << "Error occured " << strerror(errno) << std::endl;
                 return 1;
             }
             permission_code = parse_octal_mode(argv[3]);
