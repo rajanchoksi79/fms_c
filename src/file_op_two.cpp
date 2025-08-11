@@ -56,18 +56,18 @@ int move_file(char *path_one, char *path_two)
 
     if (path_one == path_two)
     {
-        printf("Error occured, file moving do not work when both directory are the same\n");
+        std::cerr << "Error occured, file moving do not work when both directory are the same" << std::endl; 
         return 1;
     }
     else
     {
         if (rename(path_one, path_two) == -1)
         {
-            printf("Error occured, %s\n", strerror(errno));
+            std::cerr << "Error occured " << strerror(errno) << std::endl;
             return 1;
         }
-
-        printf("File moved successfully\n");
+        
+        std::cout << "File moved successfully" << std::endl;
         return 0;
     }
 }
@@ -77,13 +77,13 @@ int copy_file(char *path_one, char *path_two)
 {
     if (access(path_one, F_OK) == -1)
     {
-        printf("Error occured, %s\n", strerror(errno));
+        std::cerr << "Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
     if (access(path_two, F_OK) == -1)
     {
-        printf("Error occured, %s\n", strerror(errno));
+        std::cerr << "Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
@@ -91,10 +91,10 @@ int copy_file(char *path_one, char *path_two)
     fd_one = open(path_one, O_RDONLY);
     if (fd_one == -1)
     {
-        printf("Error occured, %s\n", strerror(errno));
+        std::cerr << "Error occured " << strerror(errno) << std::endl;
         if (close(fd_one) == -1)
         {
-            printf("Error occured, %s\n", strerror(errno));
+            std::cerr << "Error occured " << strerror(errno) << std::endl;
             return 1;
         }
         return 1;
@@ -104,10 +104,10 @@ int copy_file(char *path_one, char *path_two)
     fd_two = creat(path_two, 0644);
     if (fd_two == -1)
     {
-        printf("Error occured, %s\n", strerror(errno));
+        std::cerr << "Error occured " << strerror(errno) << std::endl;
         if (close(fd_two) == -1)
         {
-            printf("Error occured, %s\n", strerror(errno));
+            std::cerr << "Error occured " << strerror(errno) << std::endl;
             return 1;
         }
         return 1;
@@ -115,7 +115,7 @@ int copy_file(char *path_one, char *path_two)
 
     if (access(path_one, R_OK) == -1)
     {
-        printf("Error occured, %s\n", strerror(errno));
+        std::cerr << "Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
@@ -126,10 +126,10 @@ int copy_file(char *path_one, char *path_two)
         byte_write = write(fd_two, buffer, byte_read);
         if (byte_write == -1)
         {
-            printf("Error occured, %s\n", strerror(errno));
+            std::cerr << "Error occured " << strerror(errno) << std::endl;
             if (close(fd_two) == -1)
             {
-                printf("Error occured, %s\n", strerror(errno));
+                std::cerr << "Error occured " << strerror(errno) << std::endl;
                 return 1;
             }
             // i need to know whether return can break the loop here because here i have to break the loop because of error, so i need to know that otherwise i have to use break;
@@ -139,16 +139,16 @@ int copy_file(char *path_one, char *path_two)
 
     if (close(fd_one) == -1)
     {
-        printf("Error occured, %s\n", strerror(errno));
+        std::cerr << "Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
     if (close(fd_two) == -1)
     {
-        printf("Error ocuured, %s\n", strerror(errno));
+        std::cerr << "Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
-    printf("Content copied from file one to file two successfully\n");
+    std::cout << "Content copied from file one to file two successfully" << std::endl;
     return 0;
 }
