@@ -99,7 +99,7 @@ int read_directory(char *path)
         }
     }
 
-    std::cout << COLOR_YELLOW COLOR_BOLD << "\n->" << directory_count << (directory_count == 1 ? " Directory, " : " Directories, "); 
+    std::cout << COLOR_YELLOW COLOR_BOLD << "\n-> " << directory_count << (directory_count == 1 ? " Directory, " : " Directories, "); 
     std::cout << COLOR_YELLOW COLOR_BOLD << file_count << (file_count == 1 ? " File" : " Files") << COLOR_RESET << std::endl;
     std::cout << std::endl;
 
