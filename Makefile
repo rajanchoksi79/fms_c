@@ -1,5 +1,5 @@
 # Compiler and flags
-CC = gcc
+CC = g++
 CFLAGS = -Iinclude -Wall -Wextra -g
 
 # Directories
@@ -8,7 +8,7 @@ INC_DIR = include
 BUILD_DIR = build
 
 # Source files and object files
-SRC = $(wildcard $(SRC_DIR)/*.c)
+SRC = $(wildcard $(SRC_DIR)/*.cpp)
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 
 # Output binary
@@ -23,7 +23,7 @@ $(OUT): $(OBJ)
 
 # Compile .c to .o
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -cpp $< -o $@
 
 # Create build directory if it doesn't exist
 $(BUILD_DIR):
