@@ -80,7 +80,7 @@ int change_file_permission(char *path, mode_t per_code)
         return 1;
     }
 
-    std::cout << "File permission changed successfully" << std::endl;
+    std::cout << "-> File permission changed successfully" << std::endl;
     
     struct stat file_details;
     if (stat(path, &file_details) == -1)
@@ -89,7 +89,7 @@ int change_file_permission(char *path, mode_t per_code)
         return 1;
     }
     mode_t file_permission = file_details.st_mode;
-    printf("File permission code: %04o\n", file_permission & 0777);
+    printf("-> File permission code: %04o\n", file_permission & 0777);
 
     return 0;
 }

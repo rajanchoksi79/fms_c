@@ -36,7 +36,7 @@ int create_file(char *path)
         return 1;
     }
 
-    std::cout << "File created successfully" << std::endl;
+    std::cout << "-> File created successfully" << std::endl;
     return 0;
 }
 
@@ -146,6 +146,6 @@ int write_file(char *path, char *text)
         return 1;
     }
 
-    std::cout << "Given text written to file successfully" << std::endl;
+    std::cout << "-> Given text written to file successfully" << std::endl;
     return 0;
 }

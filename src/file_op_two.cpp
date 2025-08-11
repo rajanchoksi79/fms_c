@@ -23,7 +23,7 @@ int remove_file(char *path)
         return 1;
     }
 
-    std::cout << "File removed successfully" << std::endl;
+    std::cout << "-> File removed successfully" << std::endl;
     return 0;
 }
 
@@ -42,7 +42,7 @@ int rename_file(char *path_one, char *path_two)
         return 1;
     }
 
-    std::cout << "File renamed successfully" << std::endl;
+    std::cout << "-> File renamed successfully" << std::endl;
     return 0;
 }
 
@@ -149,6 +149,6 @@ int copy_file(char *path_one, char *path_two)
         return 1;
     }
 
-    std::cout << "Content copied from file one to file two successfully" << std::endl;
+    std::cout << "-> Content copied from file one to file two successfully" << std::endl;
     return 0;
 }

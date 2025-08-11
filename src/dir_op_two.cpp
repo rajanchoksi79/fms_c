@@ -1,6 +1,7 @@
 #define _DEFAULT_SOURCE
 #define _XOPEN_SOURCE 500
 #include <fcntl.h>
+#include <iostream>
 #include <stdio.h>
 #include <sys/stat.h>
 #include <dirent.h>
@@ -16,7 +17,7 @@ int move_directory(char *rel_path)
     // so there is not need to add filter here, i am receiving relative or absolute path not absoute always but i can use getcwd() to get path and validate it through access() but this chdir() handles error so for now not added, if need then add one.
     if (chdir(rel_path) == -1)
     {
-        printf("Error occured, %s\n", strerror(errno));
+        std::cerr << "Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
@@ -40,21 +41,21 @@ int print_directory_content(const char *rel_path, const struct stat *stat_buf, i
 
     for (int i = 0; i < ftw_buf->level; i++)
     {
-        printf("│  ");
+        std::cout << "│  ";
     }
 
     switch (typeflag)
     {
     case FTW_D:
-        printf("├── " COLOR_CYAN "%s\n" COLOR_RESET, get_basename(rel_path));
+        std::cout << "├── " << COLOR_CYAN << get_basename(rel_path) << COLOR_RESET << std::endl;
         directory_count++;
         break;
     case FTW_F:
-        printf("├── %s\n", get_basename(rel_path));
+        std::cout << "├── " << get_basename(rel_path) << std::endl;
         file_count++;
         break;
     default:
-        printf("├── %s\n", get_basename(rel_path));
+        std::cout << "├── " << get_basename(rel_path) << std::endl;
     }
 
     return 0;
@@ -65,7 +66,7 @@ int read_directory_rec(char *path)
 
     if (access(path, F_OK) == -1)
     {
-        printf("Error occured, %s\n", strerror(errno));
+        std::cerr << "Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
@@ -75,12 +76,16 @@ int read_directory_rec(char *path)
     int max_no_directory = 20;
     if (nftw(path, print_directory_content, max_no_directory, FTW_PHYS) == -1)
     {
-        printf("Error occured, %s\n", strerror(errno));
+        std::cerr << "Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
-    printf(COLOR_YELLOW COLOR_BOLD "\n-> %d %s, " COLOR_RESET, directory_count, directory_count == 1 ? "Directory" : "Directories");
-    printf(COLOR_YELLOW COLOR_BOLD "%d %s\n\n" COLOR_RESET, file_count, file_count == 1 ? "File" : "Files");
+    std::cout << COLOR_YELLOW COLOR_BOLD << "\n->" <<directory_count << (directory_count == 1 ? " Directory, " : " Directories, "); 
+    std::cout << COLOR_YELLOW COLOR_BOLD << file_count << (file_count == 1 ? " File" : " Files") << COLOR_RESET << std::endl;
+    std::cout << std::endl;
+
+    // printf(COLOR_YELLOW COLOR_BOLD "\n-> %d %s, " COLOR_RESET, directory_count, directory_count == 1 ? "Directory" : "Directories");
+    // printf(COLOR_YELLOW COLOR_BOLD "%d %s\n\n" COLOR_RESET, file_count, file_count == 1 ? "File" : "Files");
     return 0;
 }
 
@@ -93,7 +98,7 @@ int remove_directory_content(const char *rel_path, const struct stat *stat_buf, 
     // because remove can call both unlink or rmdir based on being a file or a directory, so i am using it here.
     if (remove(rel_path) == -1)
     {
-        printf("Error occured, %s\n", strerror(errno));
+        std::cerr << "Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
@@ -104,7 +109,7 @@ int remove_directory_rec(char *path)
 {
     if (access(path, F_OK) == -1)
     {
-        printf("Error occured, %s\n", strerror(errno));
+        std::cerr << "Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
@@ -112,7 +117,7 @@ int remove_directory_rec(char *path)
     int max_no_directory = 20;
     if (nftw(path, remove_directory_content, max_no_directory, FTW_PHYS) == -1)
     {
-        printf("Error occured, %s\n", strerror(errno));
+        std::cerr << "Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
@@ -123,6 +128,6 @@ int remove_directory_rec(char *path)
     //     return 1;
     // }
 
-    printf("Directory and it's content removed successfully\n");
+    std::cout << "-> Directory and it's content removed successfully" << std::endl;
     return 0;
 }

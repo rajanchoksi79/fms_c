@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <dirent.h>
+#include <iostream>
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
@@ -14,18 +15,18 @@ int create_directory(char *path)
 {
     if (access(path, F_OK) == 0)
     {
-        printf("Error occured, %s\n", strerror(errno));
+        std::cerr << "Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
     int new_dir = mkdir(path, 0755);
     if (new_dir == -1)
     {
-        printf("Error occured, %s\n", strerror(errno));
+        std::cerr << "Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
-    printf("New directory created successfully\n");
+    std::cout << "New directory created successfully" << std::endl;
     return 0;
 }
 
@@ -34,17 +35,17 @@ int read_directory(char *path)
 {
     if (access(path, F_OK) == -1)
     {
-        printf("Error occured, %s\n", strerror(errno));
+        std::cerr << "Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
     DIR *dir = opendir(path);
     if (dir == NULL)
     {
-        printf("Error occured, %s\n", strerror(errno));
+        std::cerr << "Error occured " << strerror(errno) << std::endl;
         if (closedir(dir) == -1)
         {
-            printf("Error occured, %s\n", strerror(errno));
+            std::cerr << "Error occured " << strerror(errno) << std::endl;
             return 1;
         }
         return 1;
@@ -58,7 +59,8 @@ int read_directory(char *path)
     int directory_count = 0; 
 
     // new line before printing any detail from below.
-    printf("\n");
+    std::cout << std::endl;    
+    // printf("\n");
 
     while ((entry = readdir(dir)) != NULL)
     {
@@ -73,36 +75,40 @@ int read_directory(char *path)
         {
             if ((file_detail.st_mode & S_IFMT) == S_IFREG)
             {
-                printf("├── %s\n", entry->d_name);
+                std::cout << "├── " << entry->d_name << std::endl;
                 file_count += 1;
             }
             else if ((file_detail.st_mode & S_IFMT) == S_IFDIR)
-            {
-                printf("├── " COLOR_CYAN  "%s\n" COLOR_RESET, entry->d_name);
+            {   
+                std::cout << "├── " << COLOR_CYAN << entry->d_name << COLOR_RESET << std::endl;
                 directory_count += 1;
             }
             else if ((file_detail.st_mode & S_IFMT) == S_IFLNK)
             {
-                printf(COLOR_GREEN "├── %s\n" COLOR_RESET, entry->d_name);
+                std::cout << "├── " << COLOR_GREEN << entry->d_name << COLOR_RESET << std::endl;
             }
             else
-            {
-                printf("|_ %s\n", entry->d_name);
+            {   
+                std::cout << "|_ " << entry->d_name << std::endl;
             }
         }
         else 
         {
-            printf("Error occured, %s\n", strerror(errno));
+            std::cerr << "Error occured " << strerror(errno) << std::endl;
             return 1;
         }
     }
 
-    printf(COLOR_YELLOW COLOR_BOLD "\n-> %d %s, " COLOR_RESET, directory_count, directory_count == 1  ? "Directory" : "Directories"); 
-    printf(COLOR_YELLOW COLOR_BOLD "%d %s\n\n" COLOR_RESET, file_count, file_count == 1 ? "File" : "Files");
+    std::cout << COLOR_YELLOW COLOR_BOLD << "\n->" << directory_count << (directory_count == 1 ? " Directory, " : " Directories, "); 
+    std::cout << COLOR_YELLOW COLOR_BOLD << file_count << (file_count == 1 ? " File" : " Files") << COLOR_RESET << std::endl;
+    std::cout << std::endl;
+
+    // printf(COLOR_YELLOW COLOR_BOLD "\n-> %d %s, " COLOR_RESET, directory_count, directory_count == 1  ? "Directory" : "Directories"); 
+    // printf(COLOR_YELLOW COLOR_BOLD "%d %s\n\n" COLOR_RESET, file_count, file_count == 1 ? "File" : "Files");
 
     if (closedir(dir) == -1)
     {
-        printf("Error occured, %s\n", strerror(errno));
+        std::cerr << "Error occured " << strerror(errno) << std::endl;
         return 1;
     }
     return 0;
@@ -115,7 +121,7 @@ int get_current_directory()
     
     if (getcwd(buffer,sizeof(buffer)) == NULL) 
     {
-        printf("Error occured, %s\n", strerror(errno));
+        std::cerr << "Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
@@ -128,16 +134,16 @@ int remove_directory(char *path)
 {
     if (access(path, F_OK) == -1)
     {
-        printf("Error occured, %s\n", strerror(errno));
+        std::cerr << "Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
     if (rmdir(path) == -1)
     {
-        printf("Error occured, %s\n", strerror(errno));
+        std::cerr << "Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
-    printf("Directory removed successfully\n");
+    printf("-> Directory removed successfully\n");
     return 0;
 }

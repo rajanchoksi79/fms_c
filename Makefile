@@ -21,8 +21,8 @@ all: $(BUILD_DIR) $(OUT)
 $(OUT): $(OBJ)
 	$(CC) $(CFLAGS) $^ -o $@
 
-# Compile .c to .o
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
+# Compile .cpp to .o
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CC) $(CFLAGS) -cpp $< -o $@
 
 # Create build directory if it doesn't exist
