@@ -1,7 +1,7 @@
 
 # 🔧 FMS - File Management System
 
-A lightweight command-line utility written in C for basic file and directory management operations. Designed to be minimal, fast, and Unix-like.
+A lightweight command-line utility written in C++ for basic file and directory management operations. Designed to be minimal, fast, and Unix-like.
 
 ---
 
@@ -34,7 +34,7 @@ A lightweight command-line utility written in C for basic file and directory man
 ### 🔧 Compilation
 
 ```bash
-gcc -o fms main.c file_op_one.c file_op_two.c file_op_three.c dir_op_one.c
+g++ -o fms main.cpp file_op_one.cpp file_op_two.cpp file_op_three.cpp dir_op_one.cpp
 ````
 
 > Adjust source files based on your structure.
@@ -68,10 +68,10 @@ fms/
     ├── file_op_two.h
     ├── file_op_three.h               
 ├── src 
-    ├── dir_op_one.c                
-    ├── file_op_one.c
-    ├── file_op_two.c
-    ├── file_op_three.c
+    ├── dir_op_one.cpp                
+    ├── file_op_one.cpp
+    ├── file_op_two.cpp
+    ├── file_op_three.cpp
 ├── .gitignore
 ├── Makefile
 ├── README.md
@@ -81,7 +81,7 @@ fms/
 
 ## 🛠️ Dependencies
 
-* Standard C Library
+* Standard C and C++ Library
 * Unix/Linux system calls
 
 ---
@@ -90,7 +90,6 @@ fms/
 
 * This tool is currently **work-in-progress**.
 * Intended as a personal learning + utility project.
-* Future plans may include porting to C++ or using CLI frameworks for better parsing or rewriting in Rust.
 
 ---
 
@@ -104,5 +103,5 @@ fms/
 
 ---
 
-Made with ❤️ and C.
+Made with ❤️ and C++.
 ---
