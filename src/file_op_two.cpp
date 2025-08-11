@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <iostream>
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
@@ -12,17 +13,17 @@ int remove_file(char *path)
 
     if (access(path, F_OK) == -1)
     {
-        printf("Error occured, %s\n", strerror(errno));
+        std::cerr << "Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
     if (unlink(path) == -1)
     {
-        printf("Error occured, %s\n", strerror(errno));
+        std::cerr << "Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
-    printf("File removed successfully\n");
+    std::cout << "File removed successfully" << std::endl;
     return 0;
 }
 
@@ -31,17 +32,17 @@ int rename_file(char *path_one, char *path_two)
 {
     if (access(path_one, F_OK) == -1)
     {
-        printf("Error occured, %s\n", strerror(errno));
+        std::cerr << "Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
     if (rename(path_one, path_two) == -1)
     {
-        printf("Error occured, %s\n", strerror(errno));
+        std::cerr << "Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
-    printf("File renamed successfully\n");
+    std::cout << "File renamed successfully" << std::endl;
     return 0;
 }
 
@@ -49,7 +50,7 @@ int move_file(char *path_one, char *path_two)
 {
     if (access(path_one, F_OK) == -1)
     {
-        printf("Error occured, %s\n", strerror(errno));
+        std::cerr << "Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
