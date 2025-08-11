@@ -9,7 +9,7 @@ BUILD_DIR = build
 
 # Source files and object files
 SRC = $(wildcard $(SRC_DIR)/*.cpp)
-OBJ = $(SRC:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
+OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%.o)
 
 # Output binary
 OUT = $(BUILD_DIR)/fms

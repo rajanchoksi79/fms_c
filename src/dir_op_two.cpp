@@ -116,7 +116,7 @@ int remove_directory_rec(char *path)
         return 1;
     }
 
-    // so this is temp i included this here, because inneer files and things are removed from above function and with nfts alongside but the main directory is not removed so that is why.
+    // so this is temp i included this here, because inner files and things are removed from above function and with nfts alongside but the main directory is not removed so that is why.
     // if (remove(path) == -1) 
     // {
     //     printf("Error occured, %s\n", strerror(errno));
