@@ -15,18 +15,18 @@ int create_directory(char *path)
 {
     if (access(path, F_OK) == 0)
     {
-        std::cerr << "Error occured " << strerror(errno) << std::endl;
+        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
     int new_dir = mkdir(path, 0755);
     if (new_dir == -1)
     {
-        std::cerr << "Error occured " << strerror(errno) << std::endl;
+        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
-    std::cout << "New directory created successfully" << std::endl;
+    std::cout << "-> New directory created successfully" << std::endl;
     return 0;
 }
 
@@ -35,17 +35,17 @@ int read_directory(char *path)
 {
     if (access(path, F_OK) == -1)
     {
-        std::cerr << "Error occured " << strerror(errno) << std::endl;
+        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
     DIR *dir = opendir(path);
     if (dir == NULL)
     {
-        std::cerr << "Error occured " << strerror(errno) << std::endl;
+        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
         if (closedir(dir) == -1)
         {
-            std::cerr << "Error occured " << strerror(errno) << std::endl;
+            std::cerr << "-> Error occured " << strerror(errno) << std::endl;
             return 1;
         }
         return 1;
@@ -94,7 +94,7 @@ int read_directory(char *path)
         }
         else 
         {
-            std::cerr << "Error occured " << strerror(errno) << std::endl;
+            std::cerr << "-> Error occured " << strerror(errno) << std::endl;
             return 1;
         }
     }
@@ -108,7 +108,7 @@ int read_directory(char *path)
 
     if (closedir(dir) == -1)
     {
-        std::cerr << "Error occured " << strerror(errno) << std::endl;
+        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
         return 1;
     }
     return 0;
@@ -121,7 +121,7 @@ int get_current_directory()
     
     if (getcwd(buffer,sizeof(buffer)) == NULL) 
     {
-        std::cerr << "Error occured " << strerror(errno) << std::endl;
+        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
@@ -134,13 +134,13 @@ int remove_directory(char *path)
 {
     if (access(path, F_OK) == -1)
     {
-        std::cerr << "Error occured " << strerror(errno) << std::endl;
+        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
     if (rmdir(path) == -1)
     {
-        std::cerr << "Error occured " << strerror(errno) << std::endl;
+        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 

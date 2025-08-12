@@ -21,10 +21,10 @@ int create_file(char *path)
     fd = creat(path, 0644);
     if (fd == -1)
     {
-        std::cerr << "Error occured " << strerror(errno) << std::endl; 
+        std::cerr << "-> Error occured " << strerror(errno) << std::endl; 
         if (close(fd) == -1)
         {
-            std::cerr << "Error occured " << strerror(errno) << std::endl; 
+            std::cerr << "-> Error occured " << strerror(errno) << std::endl; 
             return 1;
         }
         return 1;
@@ -32,7 +32,7 @@ int create_file(char *path)
 
     if (close(fd) == -1)
     {
-        std::cerr << "Error occured " << strerror(errno) << std::endl; 
+        std::cerr << "-> Error occured " << strerror(errno) << std::endl; 
         return 1;
     }
 
@@ -44,7 +44,7 @@ int read_file(char *path)
 {
     if (access(path, F_OK) == -1) 
     {   
-        std::cerr << "Error occured " << strerror(errno) << std::endl;
+        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
@@ -52,10 +52,10 @@ int read_file(char *path)
     fd = open(path, O_RDONLY);
     if (fd == -1)
     {
-        std::cerr << "Error occured " << strerror(errno) << std::endl;
+        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
         if (close(fd) == -1)
         {
-            std::cerr << "Error occured " << strerror(errno) << std::endl;
+            std::cerr << "-> Error occured " << strerror(errno) << std::endl;
             return 1;
         }
         return 1;
@@ -63,7 +63,7 @@ int read_file(char *path)
 
     if (access(path, R_OK) == -1) 
     {
-        std::cerr << "Error occured " << strerror(errno) << std::endl;
+        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
@@ -75,14 +75,14 @@ int read_file(char *path)
         // i haven't handled error that may occure in writing here.
         write(STDOUT_FILENO, buffer, byte_read);
     }
-    printf("\n");
+    std::cout << std::endl;
 
     if (byte_read == -1)
     {
-        std::cerr << "Error occured " << strerror(errno) << std::endl;
+        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
         if (close(fd) == -1)
         {
-            std::cerr << "Error occured " << strerror(errno) << std::endl;
+            std::cerr << "-> Error occured " << strerror(errno) << std::endl;
             return 1;
         }
         return 1;
@@ -90,7 +90,7 @@ int read_file(char *path)
 
     if (close(fd) == -1)
     {
-        std::cerr << "Error occured " << strerror(errno) << std::endl;
+        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
@@ -103,19 +103,19 @@ int write_file(char *path, char *text)
 
     if(access(path, F_OK) == -1) 
     {
-        std::cerr << "Error occured " << strerror(errno) << std::endl;
+        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
     int fd;
     // for now i kept this as write only, if needed then change this to read and write.
-    fd = open(path, O_WRONLY);
+    fd = open(path, O_WRONLY | O_APPEND);
     if (fd == -1)
     {
-        std::cerr << "Error occured " << strerror(errno) << std::endl;
+        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
         if (close(fd) == -1)
         {
-            std::cerr << "Error occured " << strerror(errno) << std::endl;
+            std::cerr << "-> Error occured " << strerror(errno) << std::endl;
             return 1;
         }
         return 1;
@@ -123,7 +123,7 @@ int write_file(char *path, char *text)
 
     if (access(path, W_OK) == -1) 
     {
-        std::cerr << "Error occured " << strerror(errno) << std::endl;
+        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
@@ -131,10 +131,10 @@ int write_file(char *path, char *text)
     byte_write = write(fd, text, strlen(text));
     if (byte_write == -1)
     {
-        std::cerr << "Error occured " << strerror(errno) << std::endl;
+        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
         if (close(fd) == -1)
         {
-            std::cerr << "Error occured " << strerror(errno) << std::endl;
+            std::cerr << "-> Error occured " << strerror(errno) << std::endl;
             return 1;
         }
         return 1;
@@ -142,7 +142,7 @@ int write_file(char *path, char *text)
 
     if (close(fd) == -1)
     {
-        std::cerr << "Error occured " << strerror(errno) << std::endl;
+        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 

@@ -17,7 +17,7 @@ int move_directory(char *rel_path)
     // so there is not need to add filter here, i am receiving relative or absolute path not absoute always but i can use getcwd() to get path and validate it through access() but this chdir() handles error so for now not added, if need then add one.
     if (chdir(rel_path) == -1)
     {
-        std::cerr << "Error occured " << strerror(errno) << std::endl;
+        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
@@ -66,7 +66,7 @@ int read_directory_rec(char *path)
 
     if (access(path, F_OK) == -1)
     {
-        std::cerr << "Error occured " << strerror(errno) << std::endl;
+        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
@@ -76,7 +76,7 @@ int read_directory_rec(char *path)
     int max_no_directory = 20;
     if (nftw(path, print_directory_content, max_no_directory, FTW_PHYS) == -1)
     {
-        std::cerr << "Error occured " << strerror(errno) << std::endl;
+        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
@@ -94,11 +94,12 @@ int remove_directory_content(const char *rel_path, const struct stat *stat_buf, 
     // this is temp
     (void)typeflag;
     (void)stat_buf;
+    (void)ftw_buf;
 
     // because remove can call both unlink or rmdir based on being a file or a directory, so i am using it here.
     if (remove(rel_path) == -1)
     {
-        std::cerr << "Error occured " << strerror(errno) << std::endl;
+        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
@@ -109,7 +110,7 @@ int remove_directory_rec(char *path)
 {
     if (access(path, F_OK) == -1)
     {
-        std::cerr << "Error occured " << strerror(errno) << std::endl;
+        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
@@ -117,7 +118,7 @@ int remove_directory_rec(char *path)
     int max_no_directory = 20;
     if (nftw(path, remove_directory_content, max_no_directory, FTW_PHYS) == -1)
     {
-        std::cerr << "Error occured " << strerror(errno) << std::endl;
+        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 

@@ -111,7 +111,7 @@ int arg_parser(int argc, char *argv[])
         {
             if (argv[3] == NULL)
             {
-                std::cerr << "Error occured " << strerror(errno) << std::endl;
+                std::cerr << "-> Error occured " << strerror(errno) << std::endl;
                 return 1;
             }
             text = argv[3];
@@ -121,7 +121,7 @@ int arg_parser(int argc, char *argv[])
         {
             if (argv[3] == NULL)
             {
-                std::cerr << "Error occured " << strerror(errno) << std::endl;
+                std::cerr << "-> Error occured " << strerror(errno) << std::endl;
                 return 1;
             }
             path_two = argv[3];
@@ -144,7 +144,7 @@ int arg_parser(int argc, char *argv[])
         {   
             if (argv[3] == NULL) 
             {
-                std::cerr << "Error occured " << strerror(errno) << std::endl;
+                std::cerr << "-> Error occured " << strerror(errno) << std::endl;
                 return 1;
             }
             permission_code = parse_octal_mode(argv[3]);

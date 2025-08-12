@@ -16,19 +16,19 @@ int states_file(char *path)
 {
     if (access(path, F_OK) == -1) 
     {   
-        std::cerr << "Error occured " << strerror(errno) << std::endl;
+        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
     struct stat file_details;
     if (stat(path, &file_details) == -1)
     {
-        std::cerr << "Error occured " << strerror(errno) << std::endl;
+        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
     // after understanding this sys call, update these details below with what you want to display.
-    std::cout << COLOR_CYAN COLOR_BOLD << "\nFile info: \n" << COLOR_RESET << std::endl;
+    std::cout << COLOR_CYAN COLOR_BOLD << "\n-> File info: \n" << COLOR_RESET << std::endl;
     
     // i have to see how output formatting works in C++, so will do below things later.
     
@@ -48,7 +48,7 @@ int change_file_permission(char *path, mode_t per_code)
 {   
     if (access(path, F_OK) == -1) 
     {   
-        std::cerr << "Error occured " << strerror(errno) << std::endl;
+        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
         return 1;
     }
 
@@ -56,10 +56,10 @@ int change_file_permission(char *path, mode_t per_code)
     fd = open(path, O_WRONLY);
     if (fd == -1) 
     {
-        std::cerr << "Error occured " << strerror(errno) << std::endl;
+        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
         if (close(fd) == -1) 
         {
-            std::cerr << "Error occured " << strerror(errno) << std::endl;
+            std::cerr << "-> Error occured " << strerror(errno) << std::endl;
             return 1;
         }
         return 1;
@@ -71,10 +71,10 @@ int change_file_permission(char *path, mode_t per_code)
     int change_permission = fchmod(fd, per_code);
     if(change_permission == -1) 
     {
-        std::cerr << "Error occured " << strerror(errno) << std::endl;
+        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
         if (close(fd) == -1) 
         {
-            std::cerr << "Error occured " << strerror(errno) << std::endl;
+            std::cerr << "-> Error occured " << strerror(errno) << std::endl;
             return 1;
         }
         return 1;
@@ -85,7 +85,7 @@ int change_file_permission(char *path, mode_t per_code)
     struct stat file_details;
     if (stat(path, &file_details) == -1)
     {
-        std::cerr << "Error occured " << strerror(errno) << std::endl;
+        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
         return 1;
     }
     mode_t file_permission = file_details.st_mode;
@@ -103,7 +103,7 @@ mode_t parse_octal_mode(char *input)
 
     if (*end_ptr != '\0' || errno != 0 || permission_code < 0000 || permission_code > 0777) 
     {
-        std::cout << "Invalid permission code, it must be between 0000 to 0777" << strerror(errno) << std::endl;
+        std::cout << "-> Invalid permission code, it must be between 0000 to 0777" << strerror(errno) << std::endl;
         return (mode_t)-1;
     }
 

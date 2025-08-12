@@ -1,0 +1,1 @@
+this is first line i am writing in foo.txt filethis is the second line i am writing to foo.txt and it suppose to append
