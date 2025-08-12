@@ -8,8 +8,17 @@ INC_DIR = include
 BUILD_DIR = build
 
 # Source files and object files
-SRC = $(wildcard $(SRC_DIR)/*.cpp)
-OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%.o)
+SRC = $(SRC_DIR)/arg_parsing.cpp \
+      $(SRC_DIR)/dir_op_one.cpp \
+      $(SRC_DIR)/dir_op_two.cpp \
+      $(SRC_DIR)/file_op_one.cpp \
+      $(SRC_DIR)/file_op_three.cpp \
+      $(SRC_DIR)/file_op_two.cpp \
+      $(SRC_DIR)/main.cpp \
+      $(SRC_DIR)/mis_op_one.cpp
+	  
+# OBJ is now automatically derived from SRC
+OBJ = $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(SRC))
 
 # Output binary
 OUT = $(BUILD_DIR)/fms
@@ -19,11 +28,11 @@ all: $(BUILD_DIR) $(OUT)
 
 # Link object files into final binary
 $(OUT): $(OBJ)
-	$(CC) $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $(OBJ) -o $@
 
-# Compile .cpp to .o
+# Compile .cpp to .o (Generic Rule)
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
-	$(CC) $(CFLAGS) -cpp $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 # Create build directory if it doesn't exist
 $(BUILD_DIR):
@@ -36,7 +45,3 @@ clean:
 # Run the compiled binary
 run: all
 	./$(OUT)
-
-# Debug with gdb
-debug: all
-	gdb ./$(OUT)
