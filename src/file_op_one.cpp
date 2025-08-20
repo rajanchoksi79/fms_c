@@ -11,6 +11,7 @@
 
 int create_file(char *path)
 {
+    // so this is basically if file already exists i guess, but need to refector error message.
     if (access(path, F_OK) == 0) 
     {   
         std::cerr << "Error occured " << strerror(errno) << std::endl; 
@@ -22,11 +23,6 @@ int create_file(char *path)
     if (fd == -1)
     {
         std::cerr << "-> Error occured " << strerror(errno) << std::endl; 
-        if (close(fd) == -1)
-        {
-            std::cerr << "-> Error occured " << strerror(errno) << std::endl; 
-            return 1;
-        }
         return 1;
     }
 
