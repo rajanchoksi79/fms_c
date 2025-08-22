@@ -49,11 +49,6 @@ int read_file(char *path)
     if (fd == -1)
     {
         std::cerr << "-> Error occured " << strerror(errno) << std::endl;
-        if (close(fd) == -1)
-        {
-            std::cerr << "-> Error occured " << strerror(errno) << std::endl;
-            return 1;
-        }
         return 1;
     }
 
@@ -109,11 +104,6 @@ int write_file(char *path, char *text)
     if (fd == -1)
     {
         std::cerr << "-> Error occured " << strerror(errno) << std::endl;
-        if (close(fd) == -1)
-        {
-            std::cerr << "-> Error occured " << strerror(errno) << std::endl;
-            return 1;
-        }
         return 1;
     }
 
