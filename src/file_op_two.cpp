@@ -91,11 +91,6 @@ int copy_file(char *path_one, char *path_two)
     if (fd_one == -1)
     {
         std::cerr << "-> Error occured " << strerror(errno) << std::endl;
-        if (close(fd_one) == -1)
-        {
-            std::cerr << "-> Error occured " << strerror(errno) << std::endl;
-            return 1;
-        }
         return 1;
     }
 
@@ -104,11 +99,6 @@ int copy_file(char *path_one, char *path_two)
     if (fd_two == -1)
     {
         std::cerr << "-> Error occured " << strerror(errno) << std::endl;
-        if (close(fd_two) == -1)
-        {
-            std::cerr << "-> Error occured " << strerror(errno) << std::endl;
-            return 1;
-        }
         return 1;
     }
 
