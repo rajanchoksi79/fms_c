@@ -34,7 +34,7 @@ A lightweight command-line utility written in C++ for basic file and directory m
 ### 🔧 Compilation
 
 ```bash
-g++ -o fms main.cpp file_op_one.cpp file_op_two.cpp file_op_three.cpp dir_op_one.cpp
+make
 ````
 
 > Adjust source files based on your structure.
@@ -42,11 +42,11 @@ g++ -o fms main.cpp file_op_one.cpp file_op_two.cpp file_op_three.cpp dir_op_one
 ### 🧪 Example Usage
 
 ```bash
-./fms --createf /path/to/file.txt
-./fms --removef /path/to/file.txt
-./fms --createdir /path/to/new_folder
-./fms --removedir /path/to/new_folder
-./fms --changeperf /path/to/file.txt 0644
+./fms -f --createf /path/to/file.txt
+./fms -f --removef /path/to/file.txt
+./fms -d --createdir /path/to/new_folder
+./fms -d --removedir /path/to/new_folder
+./fms -f --changeperf /path/to/file.txt 0644
 ```
 
 ---
@@ -56,22 +56,33 @@ g++ -o fms main.cpp file_op_one.cpp file_op_two.cpp file_op_three.cpp dir_op_one
 ```
 fms/
 ├── build
+    ├── arg_parsing.o
     ├── dir_op_one.o
+    ├── dir_op_two.o
     ├── file_op_one.o
     ├── file_op_two.o
     ├── file_op_three.o
     ├── fms
     ├── main.o
+    ├── mis_op_one.o
 ├── include
+    ├── arg_parsing.h
+    ├── colors.h
     ├── dir_op_one.h
+    ├── dir_op_two.h
     ├── file_op_one.h
     ├── file_op_two.h
-    ├── file_op_three.h               
+    ├── file_op_three.h
+    ├── mis_op_one.h               
 ├── src 
+    ├── arg_parsing.cpp
     ├── dir_op_one.cpp                
+    ├── dir_op_two.cpp
     ├── file_op_one.cpp
     ├── file_op_two.cpp
     ├── file_op_three.cpp
+    ├── main.cpp
+    ├── mis_op_one.cpp
 ├── .gitignore
 ├── Makefile
 ├── README.md
