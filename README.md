@@ -109,7 +109,7 @@ fms/
 
 * Rajan Choksi — Full Stack Developer diving into C++ & systems programming.
 
-* 📢 Say hi on Twitter - https://x.com/Rajanchoksi_79 or check out more of my work on GitHub - https://github.com/rajanchoksi79
+* 📢 Say hi on X - https://x.com/Rajanchoksi_79 or check out more of my work on GitHub - https://github.com/rajanchoksi79
 
 ---
 
