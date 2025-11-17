@@ -60,6 +60,7 @@ int arg_parser(int argc, char *argv[])
         else
         {
             appropriate_flag();
+            return 1;
         }
     }
     else if (argc < 4) 
@@ -87,6 +88,7 @@ int arg_parser(int argc, char *argv[])
         else
         {
             appropriate_flag();
+            return 1;
         }
     }
     else if (argc < 5) 
@@ -106,6 +108,7 @@ int arg_parser(int argc, char *argv[])
         else 
         {
             appropriate_flag();
+            return 1;
         }
 
         if (file_operation && sub_flag == "--createf")
@@ -151,6 +154,7 @@ int arg_parser(int argc, char *argv[])
         else
         {
             appropriate_flag();
+            return 1;
         }
     }
     else if (argc < 6) 
@@ -170,6 +174,7 @@ int arg_parser(int argc, char *argv[])
         else 
         {
             appropriate_flag();
+            return 1;
         }
 
         if (file_operation && sub_flag == "--writef")
@@ -224,6 +229,7 @@ int arg_parser(int argc, char *argv[])
         else 
         {
             appropriate_flag();
+            return 1;
         }
     }    
 
