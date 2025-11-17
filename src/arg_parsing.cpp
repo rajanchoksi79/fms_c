@@ -34,15 +34,18 @@ int arg_parser(int argc, char *argv[])
     {
         flag = argv[1];
 
-        if (flag == "-f" || flag == "--file") 
-        {
-            file_operation = true;
-        } 
-        else if (flag == "-d" || flag == "--dir") 
-        {
-            dir_operation = true;
-        }
-        else if (flag == "-h" || flag == "--help") 
+        // i have to handle this cases where flag provided but not sub flags.
+
+        // if (flag == "-f" || flag == "--file") 
+        // {
+        //     file_operation = true;
+        // } 
+        // else if (flag == "-d" || flag == "--dir") 
+        // {
+        //     dir_operation = true;
+        // }
+        
+        if (flag == "-h" || flag == "--help") 
         {
             help_user(); 
         }
@@ -133,7 +136,7 @@ int arg_parser(int argc, char *argv[])
         {
             remove_directory(path_one);
         }
-        else if (dir_operation && sub_flag == "--mvdir") 
+        else if (dir_operation && sub_flag == "--movedir") 
         {
             move_directory(path_one);
         }
