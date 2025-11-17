@@ -55,16 +55,6 @@ make
 
 ```
 fms/
-├── build
-    ├── arg_parsing.o
-    ├── dir_op_one.o
-    ├── dir_op_two.o
-    ├── file_op_one.o
-    ├── file_op_two.o
-    ├── file_op_three.o
-    ├── fms
-    ├── main.o
-    ├── mis_op_one.o
 ├── include
     ├── arg_parsing.h
     ├── colors.h
