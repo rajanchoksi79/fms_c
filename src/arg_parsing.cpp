@@ -19,6 +19,9 @@
 int arg_parser(int argc, char *argv[]) 
 {
     std::string flag;
+    std::string sub_flag;
+    bool file_operation = false;
+    bool dir_operation = false;
     char *path_one, *path_two, *text;
 
     mode_t permission_code;
@@ -31,19 +34,23 @@ int arg_parser(int argc, char *argv[])
     {
         flag = argv[1];
 
-        if (flag == "--currentdir") 
+        if (flag == "-f" || flag == "--file") 
         {
-            get_current_directory();
+            file_operation = true;
+        } 
+        else if (flag == "-d" || flag == "--dir") 
+        {
+            dir_operation = true;
         }
-        else if (flag == "--help") 
+        else if (flag == "-h" || flag == "--help") 
         {
             help_user(); 
         }
-        else if (flag == "--about") 
+        else if (flag == "-a" || flag == "--about") 
         {
             about();
         }
-        else if (flag == "--version") 
+        else if (flag == "-v" || flag == "--version") 
         {
             version();
         }
@@ -55,47 +62,24 @@ int arg_parser(int argc, char *argv[])
     else if (argc < 4) 
     {
         flag = argv[1];
-        path_one = argv[2];
+        sub_flag = argv[2];
 
-        if (flag == "--createf")
+        if (flag == "-f" || flag == "--file") 
         {
-            create_file(path_one);
+            file_operation = true;
+        } 
+        else if (flag == "-d" || flag == "--dir") 
+        {
+            dir_operation = true;
         }
-        else if (flag == "--readf")
+        else 
         {
-            read_file(path_one);
+            appropriate_flag();
         }
-        else if (flag == "--removef")
+
+        if (dir_operation && sub_flag == "--currentdir") 
         {
-            remove_file(path_one);
-        }
-        else if (flag == "--detailf")
-        {
-            states_file(path_one);
-        }
-        else if (flag == "--createdir") 
-        {
-            create_directory(path_one);
-        }
-        else if (flag == "--readdir") 
-        {
-            read_directory(path_one);
-        }
-        else if (flag == "--removedir") 
-        {
-            remove_directory(path_one);
-        }
-        else if (flag == "--mvdir") 
-        {
-            move_directory(path_one);
-        }
-        else if (flag == "--readdirr") 
-        {
-            read_directory_rec(path_one);
-        }
-        else if (flag == "--removedirr") 
-        {
-            remove_directory_rec(path_one);
+            get_current_directory();
         }
         else
         {
@@ -105,49 +89,127 @@ int arg_parser(int argc, char *argv[])
     else if (argc < 5) 
     {
         flag = argv[1];
-        path_one = argv[2];
+        sub_flag = argv[2];
+        path_one = argv[3];
 
-        if (flag == "--writef")
+        if (flag == "-f" || flag == "--file") 
         {
-            if (argv[3] == NULL)
+            file_operation = true;
+        } 
+        else if (flag == "-d" || flag == "--dir") 
+        {
+            dir_operation = true;
+        }
+        else 
+        {
+            appropriate_flag();
+        }
+
+        if (file_operation && sub_flag == "--createf")
+        {
+            create_file(path_one);
+        }
+        else if (file_operation && sub_flag == "--readf")
+        {
+            read_file(path_one);
+        }
+        else if (file_operation && sub_flag == "--removef")
+        {
+            remove_file(path_one);
+        }
+        else if (file_operation && sub_flag == "--detailf")
+        {
+            states_file(path_one);
+        }
+        else if (dir_operation && sub_flag == "--createdir") 
+        {
+            create_directory(path_one);
+        }
+        else if (dir_operation && sub_flag == "--readdir") 
+        {
+            read_directory(path_one);
+        }
+        else if (dir_operation && sub_flag == "--removedir") 
+        {
+            remove_directory(path_one);
+        }
+        else if (dir_operation && sub_flag == "--mvdir") 
+        {
+            move_directory(path_one);
+        }
+        else if (dir_operation && sub_flag == "--readdirr") 
+        {
+            read_directory_rec(path_one);
+        }
+        else if (dir_operation && sub_flag == "--removedirr") 
+        {
+            remove_directory_rec(path_one);
+        }
+        else
+        {
+            appropriate_flag();
+        }
+    }
+    else if (argc < 6) 
+    {
+        flag = argv[1];
+        sub_flag = argv[2];
+        path_one = argv[3];
+
+        if (flag == "-f" || flag == "--file") 
+        {
+            file_operation = true;
+        } 
+        else if (flag == "-d" || flag == "--dir") 
+        {
+            dir_operation = true;
+        }
+        else 
+        {
+            appropriate_flag();
+        }
+
+        if (file_operation && sub_flag == "--writef")
+        {
+            if (argv[4] == NULL)
             {
                 std::cerr << "-> Error occured " << strerror(errno) << std::endl;
                 return 1;
             }
-            text = argv[3];
+            text = argv[4];
             write_file(path_one, text);
         }
-        else if (flag == "--copyf" || flag == "--movef" || flag == "--renamef")
+        else if (file_operation && (sub_flag == "--copyf" || sub_flag == "--movef" || sub_flag == "--renamef"))
         {
-            if (argv[3] == NULL)
+            if (argv[4] == NULL)
             {
                 std::cerr << "-> Error occured " << strerror(errno) << std::endl;
                 return 1;
             }
-            path_two = argv[3];
+            path_two = argv[4];
 
-            if (flag == "--copyf")
+            if (sub_flag == "--copyf")
             {
                 copy_file(path_one, path_two);
             }
-            else if (flag == "--movef")
+            else if (sub_flag == "--movef")
             {
                 move_file(path_one, path_two);
             }
-            else if (flag == "--renamef")
+            else if (sub_flag == "--renamef")
             {
                 rename_file(path_one, path_two);
             }
         }
         // refactore and fix this, this is temp.
-        else if (flag == "--changeperf") 
+        else if (file_operation && sub_flag == "--changeperf") 
         {   
-            if (argv[3] == NULL) 
+            if (argv[4] == NULL) 
             {
                 std::cerr << "-> Error occured " << strerror(errno) << std::endl;
                 return 1;
             }
-            permission_code = parse_octal_mode(argv[3]);
+            permission_code = parse_octal_mode(argv[4]);
             if (permission_code == (mode_t)-1) 
             {   
                 // i already handled error in parse octal function, here i am just returning in case of error
