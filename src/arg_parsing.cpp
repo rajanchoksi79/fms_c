@@ -15,6 +15,7 @@
 #include "../include/dir_op_two.h"
 #include "../include/mis_op_one.h"
 #include "../include/arg_parsing.h"
+#include "../include/file_op_four.h"
 
 int arg_parser(int argc, char *argv[]) 
 {
@@ -33,8 +34,6 @@ int arg_parser(int argc, char *argv[])
     else if (argc < 3) 
     {
         flag = argv[1];
-
-        // i have to handle this cases where flag provided but not sub flags.
 
         if (flag == "-f" || flag == "--file") 
         {
@@ -82,9 +81,10 @@ int arg_parser(int argc, char *argv[])
         else 
         {
             appropriate_flag();
+            return 1;
         }
 
-        if (dir_operation && sub_flag == "--currentdir") 
+        if (dir_operation && sub_flag == "--current") 
         {
             get_current_directory();
         }
@@ -114,43 +114,47 @@ int arg_parser(int argc, char *argv[])
             return 1;
         }
 
-        if (file_operation && sub_flag == "--createf")
+        if (file_operation && sub_flag == "--create")
         {
             create_file(path_one);
         }
-        else if (file_operation && sub_flag == "--readf")
+        else if (file_operation && sub_flag == "--read")
         {
             read_file(path_one);
         }
-        else if (file_operation && sub_flag == "--removef")
+        else if (file_operation && sub_flag == "--remove")
         {
             remove_file(path_one);
         }
-        else if (file_operation && sub_flag == "--detailf")
+        else if (file_operation && sub_flag == "--detail")
         {
             states_file(path_one);
         }
-        else if (dir_operation && sub_flag == "--createdir") 
+        else if (file_operation && sub_flag == "--count") 
+        {
+            count_details(path_one);
+        }
+        else if (dir_operation && sub_flag == "--create") 
         {
             create_directory(path_one);
         }
-        else if (dir_operation && sub_flag == "--readdir") 
+        else if (dir_operation && sub_flag == "--read") 
         {
             read_directory(path_one);
         }
-        else if (dir_operation && sub_flag == "--removedir") 
+        else if (dir_operation && sub_flag == "--remove") 
         {
             remove_directory(path_one);
         }
-        else if (dir_operation && sub_flag == "--movedir") 
+        else if (dir_operation && sub_flag == "--move") 
         {
             move_directory(path_one);
         }
-        else if (dir_operation && sub_flag == "--readdirr") 
+        else if (dir_operation && sub_flag == "--readrec") 
         {
             read_directory_rec(path_one);
         }
-        else if (dir_operation && sub_flag == "--removedirr") 
+        else if (dir_operation && sub_flag == "--remove") 
         {
             remove_directory_rec(path_one);
         }
@@ -180,7 +184,7 @@ int arg_parser(int argc, char *argv[])
             return 1;
         }
 
-        if (file_operation && sub_flag == "--writef")
+        if (file_operation && sub_flag == "--write")
         {
             if (argv[4] == NULL)
             {
@@ -190,7 +194,7 @@ int arg_parser(int argc, char *argv[])
             text = argv[4];
             write_file(path_one, text);
         }
-        else if (file_operation && (sub_flag == "--copyf" || sub_flag == "--movef" || sub_flag == "--renamef"))
+        else if (file_operation && (sub_flag == "--copy" || sub_flag == "--move" || sub_flag == "--rename"))
         {
             if (argv[4] == NULL)
             {
@@ -199,21 +203,21 @@ int arg_parser(int argc, char *argv[])
             }
             path_two = argv[4];
 
-            if (sub_flag == "--copyf")
+            if (sub_flag == "--copy")
             {
                 copy_file(path_one, path_two);
             }
-            else if (sub_flag == "--movef")
+            else if (sub_flag == "--move")
             {
                 move_file(path_one, path_two);
             }
-            else if (sub_flag == "--renamef")
+            else if (sub_flag == "--rename")
             {
                 rename_file(path_one, path_two);
             }
         }
         // refactore and fix this, this is temp.
-        else if (file_operation && sub_flag == "--changeperf") 
+        else if (file_operation && sub_flag == "--changeper") 
         {   
             if (argv[4] == NULL) 
             {
@@ -228,6 +232,16 @@ int arg_parser(int argc, char *argv[])
             }
 
             change_file_permission(path_one, permission_code);
+        }
+        else if (file_operation && sub_flag == "--pattern") 
+        {
+            if (argv[4] == NULL) 
+            {
+                std::cerr << "-> Error occured " << strerror(errno) << std::endl;
+                return 1;
+            }
+            std::string pattern = argv[4];
+            pattern_matching(path_one, pattern);
         }
         else 
         {

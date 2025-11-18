@@ -89,13 +89,13 @@ int flag_subflag_details()
     printf("\n\n");
 
     std::cout << COLOR_YELLOW COLOR_BOLD << "-> Usage Examples: \n\n" << COLOR_RESET;
-    std::cout << "File operations: \n\n";
+    std::cout << "File related operations: \n\n";
     printf("fms -f --createf myfile.txt         # Create a new file named myfile.txt\n");
     printf("fms -f --readf myfile.txt           # Read contents of myfile.txt\n");
     printf("fms -f --writef myfile.txt          # Write content into myfile.txt\n");
     printf("\n");
 
-    std::cout << "Directory operations: \n\n";
+    std::cout << "Directory related operations: \n\n";
     printf("fms -d --createdir myfolder         # Create a new directory named myfolder\n");
     printf("fms -d --removedir myfolder         # Remove a directory myfolder\n");
     printf("fms -d --currentdir                 # Info about current working directory\n");
@@ -106,7 +106,7 @@ int flag_subflag_details()
 
 int help_user() 
 {
-    std::cout << "\nWelcome to fms - File Management System\n";
+    std::cout << COLOR_CYAN COLOR_BOLD << "\n-> Welcome to fms - File Management System\n\n" << COLOR_RESET;
     std::cout << "An all in one tool to do all your file or directory related operations\n\n";
 
     flag_subflag_details();
