@@ -36,16 +36,19 @@ int arg_parser(int argc, char *argv[])
 
         // i have to handle this cases where flag provided but not sub flags.
 
-        // if (flag == "-f" || flag == "--file") 
-        // {
-        //     file_operation = true;
-        // } 
-        // else if (flag == "-d" || flag == "--dir") 
-        // {
-        //     dir_operation = true;
-        // }
-        
-        if (flag == "-h" || flag == "--help") 
+        if (flag == "-f" || flag == "--file") 
+        {
+            file_operation = true;
+            file_related_flag_subflag_details();
+            return 1;
+        } 
+        else if (flag == "-d" || flag == "--dir") 
+        {
+            dir_operation = true;
+            directory_related_flag_subflag_details();
+            return 1;
+        }
+        else if (flag == "-h" || flag == "--help") 
         {
             help_user(); 
         }

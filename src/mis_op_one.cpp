@@ -3,6 +3,57 @@
 #include "../include/mis_op_one.h"
 #include "../include/colors.h"
 
+int file_related_flag_subflag_details() 
+{
+    std::cout << COLOR_CYAN COLOR_BOLD << "\n-> please provide appropriate subflag alongside file flag\n\n" << COLOR_RESET;
+    std::cout << "Below are the list of flags and subflags for different files related operations with details\n\n";
+
+    std::cout << COLOR_YELLOW COLOR_BOLD << "-> File operation related flags: \n\n" << COLOR_RESET;
+    printf("%-10s %-20s\n\n", "Flag: ", "Subflag:");
+    printf("%-10s %-20s %-40s\n", "-f/--file", "--createf", "for creating new file");
+    printf("%-10s %-20s %-40s\n", "-f/--file", "--readf", "for reading file");
+    printf("%-10s %-20s %-40s\n", "-f/--file", "--writef", "for writing in a file");
+    printf("%-10s %-20s %-40s\n", "-f/--file", "--removef", "for removing file");
+    printf("%-10s %-20s %-40s\n", "-f/--file", "--detailf", "for knowing details of a file");
+    printf("%-10s %-20s %-40s\n", "-f/--file", "--copyf", "for copying a file");
+    printf("%-10s %-20s %-40s\n", "-f/--file", "--movef", "for moving a file");
+    printf("%-10s %-20s %-40s\n", "-f/--file", "--renamef", "for renaming a file");
+    printf("%-10s %-20s %-40s\n", "-f/--file", "--changeperf", "for changing permissions in a file");
+    printf("\n\n");
+
+    std::cout << COLOR_YELLOW COLOR_BOLD << "-> Usage Examples: \n\n" << COLOR_RESET;
+    printf("fms -f --createf myfile.txt         # Create a new file named myfile.txt\n");
+    printf("fms -f --readf myfile.txt           # Read contents of myfile.txt\n");
+    printf("fms -f --writef myfile.txt          # Write content into myfile.txt\n");
+    printf("\n");
+
+    return 0;
+}
+
+int directory_related_flag_subflag_details() 
+{
+    std::cout << COLOR_CYAN COLOR_BOLD << "\n-> please provide appropriate subflag alongside directory flag\n\n" << COLOR_RESET;
+    std::cout << "Below are the list of flags and subflags for different directory related operations with details\n\n";
+
+    std::cout << COLOR_YELLOW COLOR_BOLD << "-> Directory operation related flags: \n\n" << COLOR_RESET;
+    printf("%-10s %-20s\n\n", "Flag: ", "Subflag:");
+    printf("%-10s %-20s %-40s\n", "-d/--dir", "--createdir", "for creating new directory");
+    printf("%-10s %-20s %-40s\n", "-d/--dir", "--readdir", "for reading contents of a directory");
+    printf("%-10s %-20s %-40s\n", "-d/--dir", "--readdirr", "for reading contents of a directory recursively");
+    printf("%-10s %-20s %-40s\n", "-d/--dir", "--removedir", "for removing an empty directory");
+    printf("%-10s %-20s %-40s\n", "-d/--dir", "--removedirr", "for removing directory recursively");
+    printf("%-10s %-20s %-40s\n", "-d/--dir", "--movedir", "for moving a directory");
+    printf("%-10s %-20s %-40s\n", "-d/--dir", "--currentdir", "for getting current working directory");
+    printf("\n\n");
+
+    std::cout << COLOR_YELLOW COLOR_BOLD << "-> Usage Examples: \n\n" << COLOR_RESET;
+    printf("fms -d --createdir myfolder         # Create a new directory named myfolder\n");
+    printf("fms -d --removedir myfolder         # Remove a directory myfolder\n");
+    printf("fms -d --currentdir                 # Info about current working directory\n");
+    printf("\n\n");
+
+    return 0;
+}
 
 int flag_subflag_details() 
 {
