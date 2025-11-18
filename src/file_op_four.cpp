@@ -5,7 +5,8 @@
 #include <vector>
 #include "../include/colors.h"
 
-int count = 0;
+int line_count = 0;
+int match_count = 0;
 
 int comparing_line_with_pattern(std::string line, std::string pattern) 
 {
@@ -29,7 +30,8 @@ int comparing_line_with_pattern(std::string line, std::string pattern)
     {
         if (pattern == line_array[j]) 
         {
-            std::cout << COLOR_YELLOW COLOR_BOLD << "Line: " << count << " -> " << COLOR_RESET << ' ';
+            match_count++;
+            std::cout << COLOR_YELLOW COLOR_BOLD << "Line: " << line_count << " -> " << COLOR_RESET << ' ';
 
             for (int k = 0; k < line_array.size(); k++) 
             {
@@ -71,7 +73,7 @@ int pattern_matching(char *path, std::string pattern)
     std::string line;
 
     std::cout << '\n';
-    std::cout << COLOR_CYAN COLOR_BOLD << "-> Matching pattern: " << pattern << "in file: " << path << "\n\n" << COLOR_RESET;  
+    std::cout << COLOR_CYAN COLOR_BOLD << "-> Matching pattern: '" << pattern << "' in file: " << path << "\n\n" << COLOR_RESET;  
 
     while ((buffer_read = read(fd, buffer, sizeof(buffer))) > 0) 
     {
@@ -79,7 +81,7 @@ int pattern_matching(char *path, std::string pattern)
         {
             if (buffer[i] == '\n') 
             {
-                count++;
+                line_count++;
                 comparing_line_with_pattern(line, pattern);
                 line.clear();
             }
@@ -107,7 +109,9 @@ int pattern_matching(char *path, std::string pattern)
         return 1;
     }
 
+    std::cout << COLOR_YELLOW COLOR_BOLD << "\n-> " << match_count << " match found\n"; 
     std::cout << '\n';
+
     return 0;
 
 }
