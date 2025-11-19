@@ -56,7 +56,7 @@ int pattern_matching(char *path, std::string pattern)
 {
     if ((access(path, F_OK) == -1) || (access(path, R_OK) == -1)) 
     {
-        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
+        std::cerr << "\n-> Error occured " << strerror(errno) << "\n\n";
         return 1;
     }
 
@@ -64,7 +64,7 @@ int pattern_matching(char *path, std::string pattern)
     fd = open(path, O_RDONLY);
     if (fd == -1) 
     {
-        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
+        std::cerr << "\n-> Error occured " << strerror(errno) << "\n\n";
         return 1;
     }
 
@@ -72,13 +72,12 @@ int pattern_matching(char *path, std::string pattern)
     char buffer[1024];
     std::string line;
 
-    std::cout << '\n';
-    std::cout << COLOR_CYAN COLOR_BOLD << "-> Searching for pattern: " << COLOR_RESET << "'" << pattern << "'\n"; 
+    std::cout << COLOR_CYAN COLOR_BOLD << "\n-> Searching for pattern: " << COLOR_RESET << "'" << pattern << "'\n"; 
     std::cout << COLOR_CYAN COLOR_BOLD << "-> File: " << COLOR_RESET << "'" << path << "'\n\n";  
 
     while ((buffer_read = read(fd, buffer, sizeof(buffer))) > 0) 
     {
-        for (ssize_t i = 0; i < buffer_read; i++) 
+        for (int i = 0; i < buffer_read; i++) 
         {
             if (buffer[i] == '\n') 
             {
@@ -95,10 +94,10 @@ int pattern_matching(char *path, std::string pattern)
 
     if (buffer_read == -1) 
     {
-        std::cerr << "~> Error occured, " << strerror(errno) << '\n';
+        std::cerr << "\n-> Error occured, " << strerror(errno) << "\n\n";
         if (close(fd) == -1)
         {
-            std::cerr << "~> Error occured, " << strerror(errno) << '\n';
+            std::cerr << "\n-> Error occured, " << strerror(errno) << "\n\n";
             return 1;
         }
         return 1;
@@ -106,7 +105,7 @@ int pattern_matching(char *path, std::string pattern)
 
     if (close(fd) == -1)
     {
-        std::cerr << "~> Error occured, " << strerror(errno) << '\n';
+        std::cerr << "\n-> Error occured, " << strerror(errno) << "\n\n";
         return 1;
     }
 
