@@ -16,14 +16,14 @@ int states_file(char *path)
 {
     if (access(path, F_OK) == -1) 
     {   
-        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
+        std::cerr << "\n⚠  Error occured " << strerror(errno) << "\n\n";
         return 1;
     }
 
     struct stat file_details;
     if (stat(path, &file_details) == -1)
     {
-        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
+        std::cerr << "\n⚠  Error occured " << strerror(errno) << "\n\n";
         return 1;
     }
 
@@ -48,7 +48,7 @@ int change_file_permission(char *path, mode_t per_code)
 {   
     if (access(path, F_OK) == -1) 
     {   
-        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
+        std::cerr << "\n⚠  Error occured " << strerror(errno) << "\n\n";
         return 1;
     }
 
@@ -56,12 +56,7 @@ int change_file_permission(char *path, mode_t per_code)
     fd = open(path, O_WRONLY);
     if (fd == -1) 
     {
-        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
-        if (close(fd) == -1) 
-        {
-            std::cerr << "-> Error occured " << strerror(errno) << std::endl;
-            return 1;
-        }
+        std::cerr << "\n⚠  Error occured " << strerror(errno) << "\n\n";
         return 1;
     }
 
@@ -71,21 +66,21 @@ int change_file_permission(char *path, mode_t per_code)
     int change_permission = fchmod(fd, per_code);
     if(change_permission == -1) 
     {
-        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
+        std::cerr << "\n⚠  Error occured " << strerror(errno) << "\n\n";
         if (close(fd) == -1) 
         {
-            std::cerr << "-> Error occured " << strerror(errno) << std::endl;
+            std::cerr << "\n⚠  Error occured " << strerror(errno) << "\n\n";
             return 1;
         }
         return 1;
     }
 
-    std::cout << "-> File permission changed successfully" << std::endl;
+    std::cout << COLOR_CYAN COLOR_BOLD << "-> File permission changed successfully\n\n" << COLOR_RESET;
     
     struct stat file_details;
     if (stat(path, &file_details) == -1)
     {
-        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
+        std::cerr << "\n⚠  Error occured " << strerror(errno) << "\n\n";
         return 1;
     }
     mode_t file_permission = file_details.st_mode;

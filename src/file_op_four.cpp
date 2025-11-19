@@ -56,7 +56,7 @@ int pattern_matching(char *path, std::string pattern)
 {
     if ((access(path, F_OK) == -1) || (access(path, R_OK) == -1)) 
     {
-        std::cerr << "\n-> Error occured " << strerror(errno) << "\n\n";
+        std::cerr << "\n⚠  Error occured " << strerror(errno) << "\n\n";
         return 1;
     }
 
@@ -64,7 +64,7 @@ int pattern_matching(char *path, std::string pattern)
     fd = open(path, O_RDONLY);
     if (fd == -1) 
     {
-        std::cerr << "\n-> Error occured " << strerror(errno) << "\n\n";
+        std::cerr << "\n⚠  Error occured " << strerror(errno) << "\n\n";
         return 1;
     }
 
@@ -94,10 +94,10 @@ int pattern_matching(char *path, std::string pattern)
 
     if (buffer_read == -1) 
     {
-        std::cerr << "\n-> Error occured, " << strerror(errno) << "\n\n";
+        std::cerr << "\n⚠  Error occured, " << strerror(errno) << "\n\n";
         if (close(fd) == -1)
         {
-            std::cerr << "\n-> Error occured, " << strerror(errno) << "\n\n";
+            std::cerr << "\n⚠  Error occured, " << strerror(errno) << "\n\n";
             return 1;
         }
         return 1;
@@ -105,7 +105,7 @@ int pattern_matching(char *path, std::string pattern)
 
     if (close(fd) == -1)
     {
-        std::cerr << "\n-> Error occured, " << strerror(errno) << "\n\n";
+        std::cerr << "\n⚠  Error occured, " << strerror(errno) << "\n\n";
         return 1;
     }
 
@@ -119,7 +119,7 @@ int count_details(char *path)
 {
     if (access(path, F_OK) == -1 || access(path, R_OK) == -1)
     {
-        std::cerr << "\n-> Error occured, " << strerror(errno) << "\n\n";
+        std::cerr << "\n⚠  Error occured " << strerror(errno) << "\n\n";
         return 1;
     }
 
@@ -127,7 +127,7 @@ int count_details(char *path)
     fd = open(path, O_RDONLY);
     if (fd == -1)
     {
-        std::cerr << "\n-> Error occured, " << strerror(errno) << "\n\n";
+        std::cerr << "\n⚠  Error occured " << strerror(errno) << "\n\n";
         return 1;
     }
 
@@ -161,10 +161,10 @@ int count_details(char *path)
 
     if (buffer_read == -1)
     {
-        std::cerr << "\n-> Error occured, " << strerror(errno) << "\n\n";
+        std::cerr << "\n⚠  Error occured " << strerror(errno) << "\n\n";
         if (close(fd) == -1)
         {
-            std::cerr << "\n-> Error occured, " << strerror(errno) << "\n\n";
+            std::cerr << "\n⚠  Error occured " << strerror(errno) << "\n\n";
             return 1;
         }
         return 1;
@@ -172,7 +172,7 @@ int count_details(char *path)
 
     if (close(fd) == -1)
     {
-        std::cerr << "\n-> Error occured, " << strerror(errno) << "\n\n";
+        std::cerr << "\n⚠  Error occured " << strerror(errno) << "\n\n";
         return 1;
     }
 

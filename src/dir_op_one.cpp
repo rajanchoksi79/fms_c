@@ -15,18 +15,18 @@ int create_directory(char *path)
 {
     if (access(path, F_OK) == 0)
     {
-        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
+        std::cerr << "\n⚠  Error occured " << strerror(errno) << "\n\n";
         return 1;
     }
 
     int new_dir = mkdir(path, 0755);
     if (new_dir == -1)
     {
-        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
+        std::cerr << "\n⚠  Error occured " << strerror(errno) << "\n\n";
         return 1;
     }
 
-    std::cout << "-> New directory created successfully" << std::endl;
+    std::cout << COLOR_CYAN COLOR_BOLD << "\n-> New directory created successfully\n\n" << COLOR_RESET;
     return 0;
 }
 
@@ -35,17 +35,18 @@ int read_directory(char *path)
 {
     if (access(path, F_OK) == -1)
     {
-        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
+        std::cerr << "\n⚠  Error occured " << strerror(errno) << "\n\n";
         return 1;
     }
 
     DIR *dir = opendir(path);
     if (dir == NULL)
     {
-        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
+        std::cerr << "\n⚠  Error occured " << strerror(errno) << "\n\n";
+        // i have to see do i need this closedir here, just like in open 
         if (closedir(dir) == -1)
         {
-            std::cerr << "-> Error occured " << strerror(errno) << std::endl;
+            std::cerr << "\n⚠  Error occured " << strerror(errno) << "\n\n";
             return 1;
         }
         return 1;
@@ -94,7 +95,7 @@ int read_directory(char *path)
         }
         else 
         {
-            std::cerr << "-> Error occured " << strerror(errno) << std::endl;
+            std::cerr << "\n⚠  Error occured " << strerror(errno) << "\n\n";
             return 1;
         }
     }
@@ -108,7 +109,7 @@ int read_directory(char *path)
 
     if (closedir(dir) == -1)
     {
-        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
+        std::cerr << "\n⚠  Error occured " << strerror(errno) << "\n\n";
         return 1;
     }
     return 0;
@@ -121,11 +122,11 @@ int get_current_directory()
     
     if (getcwd(buffer,sizeof(buffer)) == NULL) 
     {
-        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
+        std::cerr << "\n⚠  Error occured " << strerror(errno) << "\n\n";
         return 1;
     }
 
-    printf(COLOR_CYAN COLOR_BOLD "\n-> %s\n\n" COLOR_RESET, buffer);
+    std::cout << COLOR_CYAN COLOR_BOLD << "\n-> " << buffer << "\n\n" COLOR_RESET;
     return 0;
 }
 
@@ -134,16 +135,16 @@ int remove_directory(char *path)
 {
     if (access(path, F_OK) == -1)
     {
-        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
+        std::cerr << "\n⚠  Error occured " << strerror(errno) << "\n\n";
         return 1;
     }
 
     if (rmdir(path) == -1)
     {
-        std::cerr << "-> Error occured " << strerror(errno) << std::endl;
+        std::cerr << "\n⚠  Error occured " << strerror(errno) << "\n\n";
         return 1;
     }
 
-    printf("-> Directory removed successfully\n");
+    std::cout << COLOR_CYAN COLOR_BOLD << "\n-> Directory removed successfully\n\n" << COLOR_RESET;
     return 0;
 }
