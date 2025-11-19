@@ -122,7 +122,7 @@ int count_details(char *path)
     // checking file if it exist and also if it is readable
     if (access(path, F_OK) == -1 || access(path, R_OK) == -1)
     {
-        std::cerr << "-> Error occured, " << strerror(errno) << '\n';
+        std::cerr << "\n-> Error occured, " << strerror(errno) << "\n\n";
         return 1;
     }
 
@@ -131,12 +131,11 @@ int count_details(char *path)
     fd = open(path, O_RDONLY);
     if (fd == -1)
     {
-        std::cerr << "-> Error occured, " << strerror(errno) << '\n';
+        std::cerr << "\n-> Error occured, " << strerror(errno) << "\n\n";
         return 1;
     }
 
-    std::cout << '\n';
-    std::cout << COLOR_CYAN COLOR_BOLD << "-> Counting details: " << '\n'; 
+    std::cout << COLOR_CYAN COLOR_BOLD << "\n-> Counting details: " << '\n'; 
     std::cout << "-> File: '" << path << "'\n\n" << COLOR_RESET;  
 
     ssize_t buffer_read;
