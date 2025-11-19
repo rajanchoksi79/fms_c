@@ -73,8 +73,8 @@ int pattern_matching(char *path, std::string pattern)
     std::string line;
 
     std::cout << '\n';
-    std::cout << COLOR_CYAN COLOR_BOLD << "-> Searching for pattern: '" << pattern << "'\n"; 
-    std::cout << "-> File: '" << path << "'\n\n" << COLOR_RESET;  
+    std::cout << COLOR_CYAN COLOR_BOLD << "-> Searching for pattern: " << COLOR_RESET << "'" << pattern << "'\n"; 
+    std::cout << COLOR_CYAN COLOR_BOLD << "-> File: " << COLOR_RESET << "'" << path << "'\n\n";  
 
     while ((buffer_read = read(fd, buffer, sizeof(buffer))) > 0) 
     {
@@ -110,8 +110,7 @@ int pattern_matching(char *path, std::string pattern)
         return 1;
     }
 
-    std::cout << COLOR_YELLOW COLOR_BOLD << "\n-> " << match_count << " match found\n"; 
-    std::cout << '\n';
+    std::cout << COLOR_YELLOW COLOR_BOLD << "\n-> Total matches: " << COLOR_RESET << match_count << "\n\n"; 
 
     return 0;
 
@@ -119,14 +118,12 @@ int pattern_matching(char *path, std::string pattern)
 
 int count_details(char *path) 
 {
-    // checking file if it exist and also if it is readable
     if (access(path, F_OK) == -1 || access(path, R_OK) == -1)
     {
         std::cerr << "\n-> Error occured, " << strerror(errno) << "\n\n";
         return 1;
     }
 
-    // creating file descriptor for opening file to read it later
     int fd;
     fd = open(path, O_RDONLY);
     if (fd == -1)
@@ -136,7 +133,7 @@ int count_details(char *path)
     }
 
     std::cout << COLOR_CYAN COLOR_BOLD << "\n-> Counting details: " << '\n'; 
-    std::cout << "-> File: '" << path << "'\n\n" << COLOR_RESET;  
+    std::cout << "-> File: " << COLOR_RESET << "'" << path << "'\n\n";  
 
     ssize_t buffer_read;
     // for now i am keeping buffer upto 1024 chars, but if needed then set it to max value thing.
@@ -150,10 +147,8 @@ int count_details(char *path)
     {
         for (ssize_t i = 0; i < buffer_read; i++) 
         {   
-            // increasing character in every character even in new line character for now.
             character_count++;
 
-            // so at every new line character there is new line so increasing line counter at that point.
             if (buffer[i] == '\n') 
             {
                 line_count++;
@@ -167,10 +162,10 @@ int count_details(char *path)
 
     if (buffer_read == -1)
     {
-        std::cerr << "~> Error occured, " << strerror(errno) << '\n';
+        std::cerr << "\n-> Error occured, " << strerror(errno) << "\n\n";
         if (close(fd) == -1)
         {
-            std::cerr << "~> Error occured, " << strerror(errno) << '\n';
+            std::cerr << "\n-> Error occured, " << strerror(errno) << "\n\n";
             return 1;
         }
         return 1;
@@ -178,15 +173,13 @@ int count_details(char *path)
 
     if (close(fd) == -1)
     {
-        std::cerr << "~> Error occured, " << strerror(errno) << '\n';
+        std::cerr << "\n-> Error occured, " << strerror(errno) << "\n\n";
         return 1;
     }
 
-    // displaying various counts
     std::cout << COLOR_YELLOW COLOR_BOLD << "-> Character Count:  " << COLOR_RESET << character_count << '\n';
     std::cout << COLOR_YELLOW COLOR_BOLD << "-> Word Count:       " << COLOR_RESET << word_count << '\n';
-    std::cout << COLOR_YELLOW COLOR_BOLD << "-> Line Count:       " << COLOR_RESET << line_count << '\n';
+    std::cout << COLOR_YELLOW COLOR_BOLD << "-> Line Count:       " << COLOR_RESET << line_count << "\n\n";
  
-    std::cout << '\n';
     return 0;
 }
