@@ -7,7 +7,7 @@
 #include <string.h>
 #include <errno.h>
 #include "../include/file_op_one.h"
-
+#include "../include/colors.h"
 
 int create_file(char *path)
 {
@@ -32,7 +32,7 @@ int create_file(char *path)
         return 1;
     }
 
-    std::cout << "-> File created successfully" << std::endl;
+    std::cout << COLOR_CYAN COLOR_BOLD << "\n-> New file created successfully\n\n" << COLOR_RESET;
     return 0;
 }
 
@@ -57,6 +57,8 @@ int read_file(char *path)
         std::cerr << "-> Error occured " << strerror(errno) << std::endl;
         return 1;
     }
+
+    std::cout << '\n';
 
     ssize_t byte_read;
     // i need to see if i need to increase or decrease this, the buffer size.
@@ -85,6 +87,7 @@ int read_file(char *path)
         return 1;
     }
 
+    std::cout << '\n';
     return 0;
 }
 
@@ -132,6 +135,6 @@ int write_file(char *path, char *text)
         return 1;
     }
 
-    std::cout << "-> Given text written to file successfully" << std::endl;
+    std::cout << COLOR_CYAN COLOR_BOLD << "\n-> Given text written to file successfully\n\n" << COLOR_RESET;
     return 0;
 }

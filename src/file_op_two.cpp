@@ -7,6 +7,7 @@
 #include <string.h>
 #include <errno.h>
 #include "../include/file_op_two.h"
+#include "../include/colors.h"
 
 int remove_file(char *path)
 {
@@ -22,7 +23,7 @@ int remove_file(char *path)
         return 1;
     }
 
-    std::cout << "-> File removed successfully" << std::endl;
+    std::cout << COLOR_CYAN COLOR_BOLD << "\n-> File removed successfully\n\n" << COLOR_RESET;
     return 0;
 }
 

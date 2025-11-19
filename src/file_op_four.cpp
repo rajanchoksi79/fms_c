@@ -73,7 +73,8 @@ int pattern_matching(char *path, std::string pattern)
     std::string line;
 
     std::cout << '\n';
-    std::cout << COLOR_CYAN COLOR_BOLD << "-> Matching pattern: '" << pattern << "' in file: " << path << "\n\n" << COLOR_RESET;  
+    std::cout << COLOR_CYAN COLOR_BOLD << "-> Searching for pattern: '" << pattern << "'\n"; 
+    std::cout << "-> File: '" << path << "'\n\n" << COLOR_RESET;  
 
     while ((buffer_read = read(fd, buffer, sizeof(buffer))) > 0) 
     {
@@ -135,7 +136,8 @@ int count_details(char *path)
     }
 
     std::cout << '\n';
-    std::cout << COLOR_CYAN COLOR_BOLD << "-> Counting details in file: " << path << "\n\n" << COLOR_RESET;  
+    std::cout << COLOR_CYAN COLOR_BOLD << "-> Counting details: " << '\n'; 
+    std::cout << "-> File: '" << path << "'\n\n" << COLOR_RESET;  
 
     ssize_t buffer_read;
     // for now i am keeping buffer upto 1024 chars, but if needed then set it to max value thing.
@@ -182,9 +184,9 @@ int count_details(char *path)
     }
 
     // displaying various counts
-    std::cout << COLOR_YELLOW COLOR_BOLD << "~> Character Count: " << COLOR_RESET << character_count << '\n';
-    std::cout << COLOR_YELLOW COLOR_BOLD << "~> Word Count: " << COLOR_RESET << word_count << '\n';
-    std::cout << COLOR_YELLOW COLOR_BOLD << "~> Line Count: " << COLOR_RESET << line_count << '\n';
+    std::cout << COLOR_YELLOW COLOR_BOLD << "-> Character Count:  " << COLOR_RESET << character_count << '\n';
+    std::cout << COLOR_YELLOW COLOR_BOLD << "-> Word Count:       " << COLOR_RESET << word_count << '\n';
+    std::cout << COLOR_YELLOW COLOR_BOLD << "-> Line Count:       " << COLOR_RESET << line_count << '\n';
  
     std::cout << '\n';
     return 0;
