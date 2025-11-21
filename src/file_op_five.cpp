@@ -125,7 +125,7 @@ int encrypt_file(char *path, std::string key)
 
     free(new_path);
 
-    std::cout << COLOR_CYAN COLOR_BOLD << "\n-> File encrypted successfully\n\n" << COLOR_RESET;
+    std::cout << COLOR_CYAN COLOR_BOLD << "\n-> File encrypted successfully\n\n" << COLOR_RESET;    
     return 0;
 }
 
