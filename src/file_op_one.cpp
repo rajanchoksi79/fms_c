@@ -19,6 +19,7 @@ int create_file(char *path)
     }
     
     int fd;
+    // i need to change this from creat to open, read TLPI for more about this context.
     fd = creat(path, 0644);
     if (fd == -1)
     {
