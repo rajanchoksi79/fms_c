@@ -254,6 +254,16 @@ int arg_parser(int argc, char *argv[])
             std::string key = argv[4];
             encrypt_file(path_one, key);
         }
+        else if (file_operation && sub_flag == "--decrypt") 
+        {
+            if (argv[4] == NULL) 
+            {
+                std::cerr << "-> Error occured " << strerror(errno) << std::endl;
+                return 1;
+            }
+            std::string key = argv[4];
+            decrypt_file(path_one, key);
+        }
         else 
         {
             appropriate_flag();
