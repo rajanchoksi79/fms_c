@@ -15,6 +15,7 @@ SRC = $(SRC_DIR)/arg_parsing.cpp \
       $(SRC_DIR)/file_op_two.cpp \
       $(SRC_DIR)/file_op_three.cpp \
       $(SRC_DIR)/file_op_four.cpp \
+      $(SRC_DIR)/file_op_five.cpp \
       $(SRC_DIR)/main.cpp \
       $(SRC_DIR)/mis_op_one.cpp
 	  

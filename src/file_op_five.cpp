@@ -3,33 +3,34 @@
 #include <string.h>
 #include <fcntl.h>
 
-char *get_filename(char *path) 
-{
-    char *filename = strrchr(path, '/');
-    if (filename) 
-    {
-        // shifting pointer from last slash to first letter of filename
-        filename++;
-    }
-    else 
-    {
-        std::cerr << "\n⚠  Error occured " << strerror(errno) << "\n\n";
-        // i have to see what to return in case of error in char type function for now i am returning NULL
-        return NULL;
-    }
+// char *get_filename(char *path) 
+// {
+//     char *filename = strrchr(path, '/');
+//     if (filename) 
+//     {
+//         // shifting pointer from last slash to first letter of filename
+//         filename++;
+//     }
+//     else 
+//     {
+//         std::cerr << "\n⚠  Error occured " << strerror(errno) << "\n\n";
+//         // i have to see what to return in case of error in char type function for now i am returning NULL
+//         return NULL;
+//     }
     
-    return filename;
-}
+//     return filename;
+// }
 
 char *get_absolute_path(char *path) 
 {
     char absolute_path[256];
     strcpy(absolute_path, path);
-
-    char *last_char_absolute_path = strrchr(absolute_path, '/');
+    
+    char *last_char_absolute_path = strrchr(absolute_path, '.');
     if (last_char_absolute_path) 
     {
-        *last_char_absolute_path = '\0';
+        last_char_absolute_path++;
+        *last_char_absolute_path = 'e';
     }
     else 
     {
@@ -59,7 +60,6 @@ int encrypt_file(char *path, std::string key)
 
     int output_fd;
     char *absolute_path = get_absolute_path(path); 
-    char *file_name = get_filename(path); 
     
     output_fd = open(absolute_path, O_RDWR | O_CREAT | O_TRUNC | O_APPEND, S_IRUSR | S_IWUSR);
     if (output_fd == -1) 
@@ -84,12 +84,10 @@ int encrypt_file(char *path, std::string key)
         i += byte_read;
     }
 
-
-
     return 0;
 }
 
-int decrypt_file(char *path, std::string key) 
-{
+// int decrypt_file(char *path, std::string key) 
+// {
 
-}
+// }

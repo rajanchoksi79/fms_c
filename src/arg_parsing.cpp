@@ -16,6 +16,7 @@
 #include "../include/mis_op_one.h"
 #include "../include/arg_parsing.h"
 #include "../include/file_op_four.h"
+#include "../include/file_op_five.h"
 
 int arg_parser(int argc, char *argv[]) 
 {
@@ -242,6 +243,16 @@ int arg_parser(int argc, char *argv[])
             }
             std::string pattern = argv[4];
             pattern_matching(path_one, pattern);
+        }
+        else if (file_operation && sub_flag == "--encrypt") 
+        {
+            if (argv[4] == NULL) 
+            {
+                std::cerr << "-> Error occured " << strerror(errno) << std::endl;
+                return 1;
+            }
+            std::string key = argv[4];
+            encrypt_file(path_one, key);
         }
         else 
         {
